@@ -7,6 +7,37 @@ const cityInput     = $('#cityInput') //Name of city in which to visit
 //API Key
 const geoKey = 'a9d59121cb4743ac9edb7c6853265cb9'
 
+//a function to pull info from LS
+function getLocalStorage(key){
+    return JSON.parse(localStorage.getItem(key)) || [] //this will return the JSON Object in LocalStorage
+}
+
+//a function to save LS data
+function saveLocalStorage(key, item){
+    localStorage.setItem(key. JSON.stringify(item))
+}
+
+
+
+//handles the modal submit to set up where information will be saved
+function handleSubmit(){
+    const trips = getLocalStorage('trips')
+
+    const newTrip = {
+        trip: tripNameInput,
+        startDate: tripStartDate,
+        tripEndDate: tripEndDate,
+        city: cityInput,
+    }
+    trips.push(newTrip)
+    saveLocalStorage('trips', trips)
+}
+
+
+
+
+
+
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
 function getGeoId(place){
