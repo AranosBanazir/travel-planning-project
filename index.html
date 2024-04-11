@@ -44,7 +44,7 @@
             >
               <li>
                 <a>Parent</a>
-                <ul class="p-2">
+                <ul class="p-2 z-100">
                   <li><a>Submenu 1</a></li>
                   <li><a>Submenu 2</a></li>
                 </ul>
@@ -58,7 +58,7 @@
             <li>
               <details>
                 <summary>Places To Stay</summary>
-                <ul class="p-2">
+                <ul class="p-2 z-1">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -113,7 +113,7 @@
             <li>
               <details>
                 <summary>Restaurant</summary>
-                <ul class="p-2">
+                <ul class="p-2 z-1">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -168,7 +168,7 @@
             <li>
               <details>
                 <summary>Clothing</summary>
-                <ul class="p-2">
+                <ul class="p-2 z-5">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -220,6 +220,37 @@
                 </ul>
               </details>
             </li>
+            <li>
+              <details>
+                <summary>Airports</summary>
+                <ul class="p-2 z-1">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Airports</span>
+                        <input
+                          type="checkbox"
+                          data-categories="airport"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">International Airports</span>
+                        <input
+                          type="checkbox"
+                          data-categories="airport.international"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
           </ul>
         </div>
         <div class="navbar-end">
@@ -248,48 +279,49 @@
         </div>
       </div>
     </nav>
-    <div id="map">
+    <div class="grid grid-rows-3 grid-flow-col gap-4">
+      <div id="map" class="row-span-full">
+
+        <img src="https://placehold.co/600x400">
 
 
 
-
-
+      </div>
+      <section id="places" class="grid grid-rows-3 grid-flow-col gap-4">
+        <div id="accordianDiv" class="row-span-full" >
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" checked="checked" /> 
+            <div class="collapse-title text-xl font-medium">
+              Click to open this one and close others
+            </div>
+            <div class="collapse-content"> 
+              <p>hello</p>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" /> 
+            <div class="collapse-title text-xl font-medium">
+              Click to open this one and close others
+            </div>
+            <div class="collapse-content"> 
+              <p>hello</p>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" /> 
+            <div class="collapse-title text-xl font-medium">
+              Click to open this one and close others
+            </div>
+            <div class="collapse-content"> 
+              <p>hello</p>
+            </div>
+          </div>
+        </div>
+        <div id="favList" class="row-span-full">
+          <h2>Favorite Places</h2>
+        </div>
+      </section>
     </div>
-    <section id="places">
-      <div id="accordianDiv">
-        <div class="collapse bg-base-200">
-          <input type="radio" name="my-accordion-1" checked="checked" /> 
-          <div class="collapse-title text-xl font-medium">
-            Click to open this one and close others
-          </div>
-          <div class="collapse-content"> 
-            <p>hello</p>
-          </div>
-        </div>
-        <div class="collapse bg-base-200">
-          <input type="radio" name="my-accordion-1" /> 
-          <div class="collapse-title text-xl font-medium">
-            Click to open this one and close others
-          </div>
-          <div class="collapse-content"> 
-            <p>hello</p>
-          </div>
-        </div>
-        <div class="collapse bg-base-200">
-          <input type="radio" name="my-accordion-1" /> 
-          <div class="collapse-title text-xl font-medium">
-            Click to open this one and close others
-          </div>
-          <div class="collapse-content"> 
-            <p>hello</p>
-          </div>
-        </div>
-      </div>
-      <div id="favList">
-        <h2>Favorite Places</h2>
-      </div>
-    </section>
-
 
 
 
