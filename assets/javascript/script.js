@@ -61,11 +61,11 @@ function getGeoId(place, initial){
     })
     .then(function(data){
         const id = data.features[0].properties.place_id
-        console.log(data.features[0])
         initMap(data.features[0].properties.lat, data.features[0].properties.lon)
         if (!initial){
         getCityInfo(id) //this returns the internal ID for the given city from the Geoapify api
         }
+        // console.log(initial)
     })   
 }
 
@@ -77,10 +77,17 @@ function getCityInfo(id){
         return response.json()
     })
     .then(function(data){
-        console.log(data)
+        const places = data.features
+        for (const place of places){
+            renderPlacesToList(place.properties)
+        }
     })
 }
 
+function renderPlacesToList(places){
+    const ignoredCategories = []
+    console.log(places)
+}
 
 
 //Uses the Google Maps Library to generate and embed a google map element into a specified element
@@ -107,6 +114,7 @@ async function newMarker(location, type = 'feature', lat, lon){
     const position = { lat: lat, lng: lon };
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     const {PinElement} = await google.maps.importLibrary("marker")
+
     //setting styles for each marker based on type
     const styles = {
         feature: {
@@ -180,7 +188,7 @@ async function newMarker(location, type = 'feature', lat, lon){
 }
 
 //event listeners
-modalButton.on('submit', handleSubmit)
+modalButton.on('click', handleSubmit)
 filter.on('click', function(){
     getGeoId(getLocalStorage('currentCity'))
 })
