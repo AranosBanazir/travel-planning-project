@@ -5,7 +5,7 @@ const tripEndDate   = $('#endDate') //Datepicker input for end of trip date
 const cityInput     = $('#cityInput') //Name of city in which to visit
 const modalButton   = $('#saveTrip') //button inside modal to save trip 
 const filter        = $('#filterBtn') //button to send the selected filters after the trip is picked
-
+let cityInfo = []
 
 //API Key
 const geoKey = 'a9d59121cb4743ac9edb7c6853265cb9'
@@ -22,18 +22,19 @@ function saveLocalStorage(key, item){
 
 
 function getCategories(){
-    const options = $('input:checked')
+    const options = $('nav input:checked')
     const categories = []
     for (let i = 0; i< options.length; i++){
         categories.push(options[i].dataset.categories)
     }
-    
+
    return categories.toString()
 
 }
 
 //handles the modal submit to set up where information will be saved
-function handleSubmit(){
+function handleSubmit(e){
+    e.preventDefault()
     const trips = getLocalStorage('trips')
 
 
@@ -47,6 +48,7 @@ function handleSubmit(){
     trips.push(newTrip)
     saveLocalStorage('trips', trips)
     saveLocalStorage('currentTrip', tripNameInput.val())
+    saveLocalStorage('currentCity', cityInput.val())
     getGeoId(cityInput.val(), true)
 }
 
@@ -60,7 +62,6 @@ function getGeoId(place, initial){
     .then(function(data){
         const id = data.features[0].properties.place_id
         console.log(data.features[0])
-
         initMap(data.features[0].properties.lat, data.features[0].properties.lon)
         if (!initial){
         getCityInfo(id) //this returns the internal ID for the given city from the Geoapify api
@@ -178,4 +179,8 @@ async function newMarker(location, type = 'feature', lat, lon){
   markercount++ //used to set the number identifier on the marker
 }
 
-modalButton.on('click', handleSubmit)
+//event listeners
+modalButton.on('submit', handleSubmit)
+filter.on('click', function(){
+    getGeoId(getLocalStorage('currentCity'))
+})
