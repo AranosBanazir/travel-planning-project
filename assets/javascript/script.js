@@ -19,6 +19,16 @@ function saveLocalStorage(key, item){
 }
 
 
+function getCategories(){
+    const options = $('input:checked')
+    const categories = []
+    for (let i = 0; i< options.length; i++){
+        categories.push(options[i].dataset.categories)
+    }
+    
+   return categories.toString()
+
+}
 
 //handles the modal submit to set up where information will be saved
 function handleSubmit(){
@@ -55,7 +65,7 @@ function getGeoId(place){
 
 function getLocalInformation(id){
     //fetch information from Geoapify
-    fetch(`https://api.geoapify.com/v2/places?categories=catering,healthcare,entertainment&filter=place:${id}&limit=500&apiKey=${geoKey}`)
+    fetch(`https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`)
     .then(function(response){
         return response.json()
     })
