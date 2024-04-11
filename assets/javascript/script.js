@@ -76,14 +76,14 @@ async function initMap(lat, lon) {
   // Request needed libraries.
   const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(mapEl, {
+  map = new Map(document.querySelector('#map'), {
     zoom: 13,
     center: position,
     mapId: "123456",
   });
 
   
-  mapEl.css('border-radius', '10px')
+  mapEl.css('border-radius', '75px')
 }
 
 
