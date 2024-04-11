@@ -1,20 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.9.0/dist/full.min.css" rel="stylesheet" type="text/css" /> <!--Daisyui CSS styles -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2vY8ffD7e_dPwhOOCwgzGLWGVFxfurO0&callback=console.debug&libraries=maps,marker&v=beta"></script> <!--Import for Google Maps Libraries -->
-    <link rel="stylesheet" href="assets/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.9.0/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!--Daisyui CSS styles -->
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2vY8ffD7e_dPwhOOCwgzGLWGVFxfurO0&callback=console.debug&libraries=maps,marker&v=beta"
+    ></script>
+    <!--Import for Google Maps Libraries -->
+    <link rel="stylesheet" href="assets/css/style.css" />
     <title>Travel Planning Project</title>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <nav>
+      <div class="navbar bg-base-100">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a>Parent</a>
+                <ul class="p-2">
+                  <li><a>Submenu 1</a></li>
+                  <li><a>Submenu 2</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <a class="btn btn-ghost text-xl">Awesome Travel Planner </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li>
+              <details>
+                <summary>Places To Stay</summary>
+                <ul class="p-2">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Hotels</span>
+                        <input
+                          type="checkbox"
+                          data-categories="accommodation.hotel"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Apartments</span>
+                        <input
+                          type="checkbox"
+                          data-categories="accommodation.apartment"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Motels</span>
+                        <input
+                          type="checkbox"
+                          data-categories="accommodation.motel"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Hostels</span>
+                        <input
+                          type="checkbox"
+                          data-categories="accommodation.hostel"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Restaurant</summary>
+                <ul class="p-2">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Italian</span>
+                        <input
+                          type="checkbox"
+                          data-categories="catering.restaurant.italian"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Chinese</span>
+                        <input
+                          type="checkbox"
+                          data-categories="catering.restaurant.chinese"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Mexican</span>
+                        <input
+                          type="checkbox"
+                          data-categories="catering.restaurant.mexican"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Indian</span>
+                        <input
+                          type="checkbox"
+                          data-categories="catering.restaurant.indian"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Clothing</summary>
+                <ul class="p-2">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Men</span>
+                        <input
+                          type="checkbox"
+                          data-categories="commercial.clothing.men"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Women</span>
+                        <input
+                          type="checkbox"
+                          data-categories="commercial.clothing.women"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Kids</span>
+                        <input
+                          type="checkbox"
+                          data-categories="commercial.clothing.kids"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Shoes</span>
+                        <input
+                          type="checkbox"
+                          data-categories="commercial.clothing.shoes"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <!-- Open the modal using ID.showModal() method -->
+          <button class="btn" onclick="my_modal_5.showModal()">
+            Create New Trip
+          </button>
+          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+              <h3 class="font-bold text-lg">Plan Your Awesome Trip!!!</h3>
+              <p class="py-4">
+                <input type="text" placeholder="My Trip" id="tripName"  class="input input-bordered w-full max-w-xs" />
+                <input type="date" placeholder="Start Date" id="startDate" class="input input-bordered w-full max-w-xs" />
+                <input type="date" placeholder="End Date" id="endDate" class="input input-bordered w-full max-w-xs" />
+                <input type="text" placeholder="City Name" id="cityInput" class="input input-bordered w-full max-w-xs" />
+                
+              </p>
+              <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button type="submit" id="saveTrip" class="btn">Save My Trip</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </div>
+      </div>
+    </nav>
+    <div id="map">
 
 
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script> <!--CDN for Jquery -->
-    <script src="https://cdn.tailwindcss.com"></script> <!--CDN for Tailwind -->
+
+
+
+    </div>
+    <section id="places">
+      <div id="accordianDiv">
+        <div class="collapse bg-base-200">
+          <input type="radio" name="my-accordion-1" checked="checked" /> 
+          <div class="collapse-title text-xl font-medium">
+            Click to open this one and close others
+          </div>
+          <div class="collapse-content"> 
+            <p>hello</p>
+          </div>
+        </div>
+        <div class="collapse bg-base-200">
+          <input type="radio" name="my-accordion-1" /> 
+          <div class="collapse-title text-xl font-medium">
+            Click to open this one and close others
+          </div>
+          <div class="collapse-content"> 
+            <p>hello</p>
+          </div>
+        </div>
+        <div class="collapse bg-base-200">
+          <input type="radio" name="my-accordion-1" /> 
+          <div class="collapse-title text-xl font-medium">
+            Click to open this one and close others
+          </div>
+          <div class="collapse-content"> 
+            <p>hello</p>
+          </div>
+        </div>
+      </div>
+      <div id="favList">
+        <h2>Favorite Places</h2>
+      </div>
+    </section>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!--CDN for Jquery -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--CDN for Tailwind -->
     <script src="assets/javascript/script.js"></script>
-</body>
+  </body>
 </html>
