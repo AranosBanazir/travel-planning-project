@@ -3,7 +3,9 @@ const tripNameInput = $('#tripName') //Text input on the modal for the name of t
 const tripStartDate = $('#startDate') //Datepicker input for start of trip date
 const tripEndDate   = $('#endDate') //Datepicker input for end of trip date
 const cityInput     = $('#cityInput') //Name of city in which to visit
-const modalButton = $('#saveTrip') //button inside modal to save trip 
+const modalButton   = $('#saveTrip') //button inside modal to save trip 
+const filter        = $('#filterBtn') //button to send the selected filters after the trip is picked
+let cityInfo = []
 
 //API Key
 const geoKey = 'a9d59121cb4743ac9edb7c6853265cb9'
@@ -19,9 +21,20 @@ function saveLocalStorage(key, item){
 }
 
 
+function getCategories(){
+    const options = $('nav input:checked')
+    const categories = []
+    for (let i = 0; i< options.length; i++){
+        categories.push(options[i].dataset.categories)
+    }
+
+   return categories.toString()
+
+}
 
 //handles the modal submit to set up where information will be saved
-function handleSubmit(){
+function handleSubmit(e){
+    e.preventDefault()
     const trips = getLocalStorage('trips')
 
 
@@ -33,12 +46,15 @@ function handleSubmit(){
     }
 
     trips.push(newTrip)
-    saveLocalStorage(tripNameInput.val(), trips)
-    // console.log(trips)
+    saveLocalStorage('trips', trips)
+    saveLocalStorage('currentTrip', tripNameInput.val())
+    saveLocalStorage('currentCity', cityInput.val())
+    getGeoId(cityInput.val(), true)
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
-function getGeoId(place){
+//if initial then we want to just display the map and not gather information
+function getGeoId(place, initial){
     fetch(`https://api.geoapify.com/v1/geocode/search?text=${place}&apiKey=${geoKey}`)
     .then(function(response){
         return response.json()
@@ -46,16 +62,17 @@ function getGeoId(place){
     .then(function(data){
         const id = data.features[0].properties.place_id
         console.log(data.features[0])
-
         initMap(data.features[0].properties.lat, data.features[0].properties.lon)
-        getLocalInformation(id)
+        if (!initial){
+        getCityInfo(id) //this returns the internal ID for the given city from the Geoapify api
+        }
     })   
 }
 
 
-function getLocalInformation(id){
+function getCityInfo(id){
     //fetch information from Geoapify
-    fetch(`https://api.geoapify.com/v2/places?categories=catering,healthcare,entertainment&filter=place:${id}&limit=500&apiKey=${geoKey}`)
+    fetch(`https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`)
     .then(function(response){
         return response.json()
     })
@@ -74,14 +91,14 @@ async function initMap(lat, lon) {
   // Request needed libraries.
   const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(mapEl, {
+  map = new Map(document.querySelector('#map'), {
     zoom: 13,
     center: position,
     mapId: "123456",
   });
 
   
-  mapEl.css('border-radius', '10px')
+  mapEl.css('border-radius', '75px')
 }
 
 
@@ -162,4 +179,8 @@ async function newMarker(location, type = 'feature', lat, lon){
   markercount++ //used to set the number identifier on the marker
 }
 
-modalButton.on('click', handleSubmit)
+//event listeners
+modalButton.on('submit', handleSubmit)
+filter.on('click', function(){
+    getGeoId(getLocalStorage('currentCity'))
+})
