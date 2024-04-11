@@ -32,12 +32,9 @@ function handleSubmit(){
         city: cityInput.val(),
     }
 
-    
-
-
     trips.push(newTrip)
-    saveLocalStorage('trips', trips)
-    console.log(trips)
+    saveLocalStorage(tripNameInput.val(), trips)
+    // console.log(trips)
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
