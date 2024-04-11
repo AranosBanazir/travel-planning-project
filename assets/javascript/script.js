@@ -3,7 +3,9 @@ const tripNameInput = $('#tripName') //Text input on the modal for the name of t
 const tripStartDate = $('#startDate') //Datepicker input for start of trip date
 const tripEndDate   = $('#endDate') //Datepicker input for end of trip date
 const cityInput     = $('#cityInput') //Name of city in which to visit
-const modalButton = $('#saveTrip') //button inside modal to save trip 
+const modalButton   = $('#saveTrip') //button inside modal to save trip 
+const filter        = $('#filterBtn') //button to send the selected filters after the trip is picked
+
 
 //API Key
 const geoKey = 'a9d59121cb4743ac9edb7c6853265cb9'
@@ -43,12 +45,14 @@ function handleSubmit(){
     }
 
     trips.push(newTrip)
-    saveLocalStorage(tripNameInput.val(), trips)
-    // console.log(trips)
+    saveLocalStorage('trips', trips)
+    saveLocalStorage('currentTrip', tripNameInput.val())
+    getGeoId(cityInput.val(), true)
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
-function getGeoId(place){
+//if initial then we want to just display the map and not gather information
+function getGeoId(place, initial){
     fetch(`https://api.geoapify.com/v1/geocode/search?text=${place}&apiKey=${geoKey}`)
     .then(function(response){
         return response.json()
@@ -58,12 +62,14 @@ function getGeoId(place){
         console.log(data.features[0])
 
         initMap(data.features[0].properties.lat, data.features[0].properties.lon)
-        getLocalInformation(id)
+        if (!initial){
+        getCityInfo(id) //this returns the internal ID for the given city from the Geoapify api
+        }
     })   
 }
 
 
-function getLocalInformation(id){
+function getCityInfo(id){
     //fetch information from Geoapify
     fetch(`https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`)
     .then(function(response){

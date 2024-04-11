@@ -18,7 +18,8 @@
     <title>Travel Planning Project</title>
   </head>
   <body>
-    <nav>
+    <!-- CS: Added 20 margin to nav -->
+    <nav class="mb-20"> 
       <div class="navbar bg-base-100">
         <div class="navbar-start">
           <div class="dropdown">
@@ -252,13 +253,14 @@
               </details>
             </li>
           </ul>
+          <button class="btn" id="filterBtn">Apply Filters</button>
         </div>
         <div class="navbar-end">
           <!-- Open the modal using ID.showModal() method -->
-          <button class="btn" onclick="my_modal_5.showModal()">
+          <button class="btn" onclick="newTripModal.showModal()">
             Create New Trip
           </button>
-          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+          <dialog id="newTripModal" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box">
               <h3 class="font-bold text-lg">Plan Your Awesome Trip!!!</h3>
               <p class="py-4">
