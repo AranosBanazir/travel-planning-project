@@ -3,6 +3,7 @@ const tripNameInput = $('#tripName') //Text input on the modal for the name of t
 const tripStartDate = $('#startDate') //Datepicker input for start of trip date
 const tripEndDate   = $('#endDate') //Datepicker input for end of trip date
 const cityInput     = $('#cityInput') //Name of city in which to visit
+const modalButton = $('#saveTrip') //button inside modal to save trip 
 
 //API Key
 const geoKey = 'a9d59121cb4743ac9edb7c6853265cb9'
@@ -14,7 +15,7 @@ function getLocalStorage(key){
 
 //a function to save LS data
 function saveLocalStorage(key, item){
-    localStorage.setItem(key. JSON.stringify(item))
+    localStorage.setItem(key, JSON.stringify(item))
 }
 
 
@@ -23,21 +24,18 @@ function saveLocalStorage(key, item){
 function handleSubmit(){
     const trips = getLocalStorage('trips')
 
+
     const newTrip = {
-        trip: tripNameInput,
-        startDate: tripStartDate,
-        tripEndDate: tripEndDate,
-        city: cityInput,
+        trip: tripNameInput.val(),
+        startDate: tripStartDate.val(),
+        tripEndDate: tripEndDate.val(),
+        city: cityInput.val(),
     }
+
     trips.push(newTrip)
-    saveLocalStorage('trips', trips)
+    saveLocalStorage(tripNameInput.val(), trips)
+    // console.log(trips)
 }
-
-
-
-
-
-
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
 function getGeoId(place){
@@ -163,3 +161,5 @@ async function newMarker(location, type = 'feature', lat, lon){
  
   markercount++ //used to set the number identifier on the marker
 }
+
+modalButton.on('click', handleSubmit)
