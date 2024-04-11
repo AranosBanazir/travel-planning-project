@@ -264,6 +264,7 @@
             <div class="modal-box">
               <h3 class="font-bold text-lg">Plan Your Awesome Trip!!!</h3>
               <p class="py-4">
+                <form method="dialog">
                 <input type="text" placeholder="My Trip" id="tripName"  class="input input-bordered w-full max-w-xs" />
                 <input type="date" placeholder="Start Date" id="startDate" class="input input-bordered w-full max-w-xs" />
                 <input type="date" placeholder="End Date" id="endDate" class="input input-bordered w-full max-w-xs" />
@@ -271,9 +272,9 @@
                 
               </p>
               <div class="modal-action">
-                <form method="dialog">
+                
                   <!-- if there is a button in form, it will close the modal -->
-                  <button type="submit" id="saveTrip" class="btn">Save My Trip</button>
+                  <button onclick="newTripModal.close()" type="submit" id="saveTrip" class="btn">Save My Trip</button>
                 </form>
               </div>
             </div>

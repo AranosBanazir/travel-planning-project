@@ -66,6 +66,7 @@ function getGeoId(place, initial){
         if (!initial){
         getCityInfo(id) //this returns the internal ID for the given city from the Geoapify api
         }
+        console.log(initial)
     })   
 }
 
@@ -180,7 +181,7 @@ async function newMarker(location, type = 'feature', lat, lon){
 }
 
 //event listeners
-modalButton.on('submit', handleSubmit)
+modalButton.on('click', handleSubmit)
 filter.on('click', function(){
     getGeoId(getLocalStorage('currentCity'))
 })
