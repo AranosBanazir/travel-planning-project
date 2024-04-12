@@ -1,0 +1,17 @@
+
+
+#map{
+    max-height: 1000px;
+}
+
+.collapse-content{
+    max-height: 300px;
+}
+
+input[type='checkbox'] {
+    accent-color: gold;
+}
+
+.bg-favorite{
+    background-color: yellow;
+}
