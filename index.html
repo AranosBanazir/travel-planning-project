@@ -59,7 +59,7 @@
             <li class="z-100">
               <details>
                 <summary>Places To Stay</summary>
-                <ul class="p-2 z-1">
+                <ul class="p-2" style="z-index: 1;">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -114,7 +114,7 @@
             <li>
               <details>
                 <summary>Restaurant</summary>
-                <ul class="p-2 z-1">
+                <ul class="p-2" style="z-index: 1;">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -166,10 +166,10 @@
                 </ul>
               </details>
             </li>
-            <li class="z-100">
+            <li>
               <details>
                 <summary>Clothing</summary>
-                <ul class="p-2 z-5">
+                <ul class="p-2" style="z-index: 1;">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -224,7 +224,7 @@
             <li>
               <details>
                 <summary>Airports</summary>
-                <ul class="p-2 z-1">
+                <ul class="p-2" style="z-index: 1;">
                   <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
@@ -295,28 +295,45 @@
           <div class="collapse bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" /> 
             <div class="collapse-title text-xl font-medium">
-              Click to open this one and close others
+              Places To Stay
             </div>
             <div class="collapse-content"> 
-              <p>hello</p>
+              <ul id="hotelList">
+                
+              </ul>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" checked="checked" /> 
+            <div class="collapse-title text-xl font-medium">
+              Restaurants
+            </div>
+            <div class="collapse-content"> 
+              <ul id="restaurantList">
+              
+              </ul>
             </div>
           </div>
           <div class="collapse bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
-              Click to open this one and close others
+              Clothing
             </div>
             <div class="collapse-content"> 
-              <p>hello</p>
+              <ul id="clothingList">
+                
+              </ul>
             </div>
           </div>
           <div class="collapse bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
-              Click to open this one and close others
+              Airports
             </div>
             <div class="collapse-content"> 
-              <p>hello</p>
+              <ul id="airportList">
+                
+              </ul>
             </div>
           </div>
         </div>
