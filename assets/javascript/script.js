@@ -211,20 +211,22 @@ async function newMarker(location, type = 'feature', lat, lon){
 
 
 function renderFavoritePlaces(place){
-    
+    console.log(place)
 
 }
+
 
 //event listeners
 modalButton.on('click', handleSubmit)
 filter.on('click', function(){
+    console.log('clicked')
     getGeoId(getLocalStorage('currentCity'))
 })
 
 accordianDiv.on('click', 'button', function(e){
 
     const targetBtn = $(e.target)
-    renderFavoritePlaces(e.target.innerText)
+    renderFavoritePlaces(e.target.innerText.split('.')[1])
     targetBtn.toggleClass('bg-favorite')
     console.log(e)
 })
