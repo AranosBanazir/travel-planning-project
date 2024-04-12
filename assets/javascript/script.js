@@ -5,6 +5,8 @@ const tripEndDate   = $('#endDate') //Datepicker input for end of trip date
 const cityInput     = $('#cityInput') //Name of city in which to visit
 const modalButton   = $('#saveTrip') //button inside modal to save trip 
 const filter        = $('#filterBtn') //button to send the selected filters after the trip is picked
+const accordianDiv  = $('#accordianDiv')
+
 let cityInfo = []
 
 //API Key
@@ -83,10 +85,36 @@ function getCityInfo(id){
         }
     })
 }
-
+let markercount = 1
 function renderPlacesToList(places){
-    const ignoredCategories = []
-    console.log(places)
+    const restaurantList = $('#restaurantList')
+    const airportList = $('#airportList')
+    const hotelList = $('#hotelList')
+    const clothingList = $('#clothingList')
+    const categories = places.categories
+    const favBtn = $(`<button>`)
+    const newListItem = $(`<li>`)
+    
+
+        //TODO Check why names are undefined in the optional statement
+    if (categories.includes('catering')){
+        let name = places.name
+
+        if (!name){
+            name = places.address_line1
+        }
+        
+        favBtn.text(`${markercount}. ${name}`)
+        favBtn.appendTo(newListItem)
+        
+        newListItem.appendTo(restaurantList)
+        // console.log(places)
+        // newMarker(location, 'catering', places.lat, places.lon)
+    }else if (categories.includes('accommodations')){
+
+    }
+
+    markercount++
 }
 
 
@@ -105,7 +133,7 @@ async function initMap(lat, lon) {
   });
 
   
-  mapEl.css('border-radius', '75px')
+  mapEl.css('border-radius', '100px')
 }
 
 
@@ -178,17 +206,25 @@ async function newMarker(location, type = 'feature', lat, lon){
    
   });
 
-  const list = $('#places')
-  const place = $(`<li>     ${markercount}. ${location}</li>`)
-  place.css('background-color', styles[type].background)
-  place.css('color', styles[type].glyphColor)
-  place.appendTo(list)
- 
-  markercount++ //used to set the number identifier on the marker
+
+}
+
+
+function renderFavoritePlaces(place){
+    
+
 }
 
 //event listeners
 modalButton.on('click', handleSubmit)
 filter.on('click', function(){
     getGeoId(getLocalStorage('currentCity'))
+})
+
+accordianDiv.on('click', 'button', function(e){
+
+    const targetBtn = $(e.target)
+    renderFavoritePlaces(e.target.innerText)
+    targetBtn.toggleClass('bg-favorite')
+    console.log(e)
 })
