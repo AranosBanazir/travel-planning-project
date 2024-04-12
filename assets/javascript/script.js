@@ -210,7 +210,7 @@ async function newMarker(location, type = 'feature', lat, lon){
 }
 
 
-function renderFavoritePlaces(){
+function renderFavoritePlaces(place){
     
 
 }
