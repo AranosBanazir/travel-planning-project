@@ -22,6 +22,30 @@ const backButton = $('#backButton')
     }
 
 
+     function getFavPlaceInfo(place){
+        const str = place + ' in ' + getLocalStorage('currentCity')
+        const replacedPlaceStr = str.replace(/\s/g, '%20')
+        const url = `https://local-business-data.p.rapidapi.com/search?query=${replacedPlaceStr}&limit=20&zoom=13&language=en&region=us`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '8e3d00daf4mshd8fb0721ff0ee65p100d76jsnde8f75dad54d',
+                'X-RapidAPI-Host': 'local-business-data.p.rapidapi.com'
+            }
+        };
+
+     fetch(url, options).then(function(response){
+            return response.json()
+        }).then(function(data){
+            console.log(data)
+        })
+        console.log(replacedPlaceStr)
+    }
+
+
+
+
+
 backButton.on('click', function(){
     //return to landing page
 })
