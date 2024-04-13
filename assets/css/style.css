@@ -14,4 +14,16 @@ input[type='checkbox'] {
 
 .bg-favorite{
     background-color: yellow;
+    color: black;
+    border-radius: 4px;
+}
+
+.form-control{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav label span {
+    margin-right: 4px;
 }

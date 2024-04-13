@@ -6,6 +6,8 @@ const cityInput     = $('#cityInput') //Name of city in which to visit
 const modalButton   = $('#saveTrip') //button inside modal to save trip 
 const filter        = $('#filterBtn') //button to send the selected filters after the trip is picked
 const accordianDiv  = $('#accordianDiv')
+const favPlaceList  = $('#favPlaceList')
+
 
 let cityInfo = []
 
@@ -211,22 +213,29 @@ async function newMarker(location, type = 'feature', lat, lon){
 
 
 function renderFavoritePlaces(place){
-    console.log(place)
+
+
+    
 
 }
 
 
+const btn = document.getElementById('filterBtn')
+
 //event listeners
 modalButton.on('click', handleSubmit)
 filter.on('click', function(){
-    console.log('clicked')
+    
     getGeoId(getLocalStorage('currentCity'))
 })
-
+let favListPair;
+const nameList = []
 accordianDiv.on('click', 'button', function(e){
-
+    const name = e.target.innerText.split('.')[1]
     const targetBtn = $(e.target)
-    renderFavoritePlaces(e.target.innerText.split('.')[1])
+   
+        
+        renderFavoritePlaces(name)
+ 
     targetBtn.toggleClass('bg-favorite')
-    console.log(e)
 })
