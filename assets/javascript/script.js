@@ -45,6 +45,7 @@ function handleSubmit(e) {
     startDate: tripStartDate.val(),
     tripEndDate: tripEndDate.val(),
     city: cityInput.val(),
+    id: Math.random().toString(),
   };
 
   trips.push(newTrip);
@@ -216,5 +217,4 @@ accordianDiv.on("click", "button", function (e) {
 });
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
-  console.log("clicked");
 });

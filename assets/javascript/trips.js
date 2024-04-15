@@ -2,14 +2,16 @@
 //so that we can view previously scheduled trips by name, as well as the saved places of interest
 const backButton = $("#backButton");
 const tripList = $("#tripsList");
+const deleteButton = $(".deleteTrip");
 
 // using this to test retrieving data from LS
 const testButton = $("#testButton");
 const testRender = $("#testRender");
+const testTripsList = $("#tripsList");
 
 //a function to pull info from LS
 function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key)) || []; //this will return the JSON Object in LocalStorage
+  return JSON.parse(localStorage.getItem(key)) || []; //this will return th12345e JSON Object in LocalStorage
 }
 
 //a function to save LS data
@@ -43,6 +45,8 @@ function renderTrips() {
   });
 }
 
+function deleteTrip() {}
+
 function getFavPlaceInfo(place) {
   const str = place + " in " + getLocalStorage("currentCity");
   const replacedPlaceStr = str.replace(/\s/g, "%20");
@@ -71,6 +75,9 @@ testButton.on("click", () => {
 });
 testRender.on("click", () => {
   renderTrips();
+});
+deleteButton.on("click", () => {
+  console.log("delete button clicked");
 });
 backButton.on("click", function () {
   //return to landing page
