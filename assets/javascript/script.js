@@ -8,7 +8,7 @@ const filter = $("#filterBtn"); //button to send the selected filters after the 
 const accordianDiv = $("#accordianDiv");
 const favPlaceList = $("#favPlaceList");
 // Button to transition to the favorite trips pages
-const favPlaceBtn = $("#favPlaceBtn");
+const favTripsBtn = $("#favTripsBtn");
 
 let cityInfo = [];
 
@@ -214,6 +214,7 @@ accordianDiv.on("click", "button", function (e) {
 
   targetBtn.toggleClass("bg-favorite");
 });
-favPlaceBtn.on("click", () => {
+favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
+  console.log("clicked");
 });
