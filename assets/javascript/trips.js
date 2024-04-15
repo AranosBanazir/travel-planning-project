@@ -5,6 +5,7 @@ const backButton = $("#backButton");
 // using this to test retrieving data from LS
 const testButton = $("#testButton");
 const testRender = $("#testRender");
+const tripList = $("#tripsList");
 
 //a function to pull info from LS
 function getLocalStorage(key) {
@@ -17,12 +18,26 @@ function saveLocalStorage(key, item) {
 }
 // testing function to retrieve trips from LS
 function getTrips() {
-  const trips = getLocalStorage("trips");
-  console.log(trips);
-  return trips;
+  const savedTrips = getLocalStorage("trips");
+  console.log(savedTrips);
+  return savedTrips;
 }
 //Make a function to render LS info to Page
-function renderTrips() {}
+function renderTrips() {
+  const trips = getTrips();
+  tripList.empty();
+  trips.forEach((trip) => {
+    const tripCard = `
+   <div class="card">
+   <div class="card-body">
+     <h5 class="card-title">${trip.trip}</h5>
+     <p class="card-text">Destination: ${trip.city}</p>
+     <p class="card-text">Start Date: ${trip.startDate}</p>
+     <p class="card-text">End Date: ${trip.tripEndDate}</p>
+     <button class="btn btn-primary" id="viewPlaces">View Places</button>`;
+    tripList.append(tripCard);
+  });
+}
 
 function getFavPlaceInfo(place) {
   const str = place + " in " + getLocalStorage("currentCity");
@@ -47,6 +62,9 @@ function getFavPlaceInfo(place) {
 }
 testButton.on("click", () => {
   getTrips();
+});
+testRender.on("click", () => {
+  renderTrips();
 });
 backButton.on("click", function () {
   //return to landing page
