@@ -30,13 +30,15 @@ function renderTrips() {
   tripList.empty();
   trips.forEach((trip) => {
     const tripCard = `
-   <div class="card">
-   <div class="card-body">
-     <h5 class="card-title">${trip.trip}</h5>
-     <p class="card-text">Destination: ${trip.city}</p>
-     <p class="card-text">Start Date: ${trip.startDate}</p>
-     <p class="card-text">End Date: ${trip.tripEndDate}</p>
-     <button class="btn btn-primary" id="viewPlaces">View Places</button>`;
+    <div class="collapse collapse-arrow bg-base-200">
+    <input type="radio" name="my-accordion-2" checked="checked" />
+    <div class="collapse-title text-xl font-medium">${trip.trip}</div>
+    <div class="collapse-content">
+      <p>${trip.city}</p>
+      <p>${trip.startDate}<p>
+      <p>${trip.tripEndDate}</p>
+    </div>
+  </div>`;
     tripList.append(tripCard);
   });
 }
@@ -72,4 +74,5 @@ testRender.on("click", () => {
 });
 backButton.on("click", function () {
   //return to landing page
+  window.location.href = "./index.html";
 });
