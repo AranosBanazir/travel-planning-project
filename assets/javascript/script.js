@@ -8,7 +8,7 @@ const filter = $("#filterBtn"); //button to send the selected filters after the 
 const accordianDiv = $("#accordianDiv");
 const favPlaceList = $("#favPlaceList");
 // Button to transition to the favorite trips pages
-const favPlaceBtn = $("#favPlaceBtn");
+const favTripsBtn = $("#favTripsBtn");
 
 let cityInfo = [];
 
@@ -45,6 +45,7 @@ function handleSubmit(e) {
     startDate: tripStartDate.val(),
     tripEndDate: tripEndDate.val(),
     city: cityInput.val(),
+    id: Math.random().toString(),
   };
 
   trips.push(newTrip);
@@ -102,11 +103,9 @@ function renderPlacesToList(places) {
   if (!name) {
     name = places.address_line1;
   }
-  
+
   //TODO Check why names are undefined in the optional statement
   if (categories.includes("catering")) {
-
-
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
 
@@ -215,7 +214,6 @@ accordianDiv.on("click", "button", function (e) {
 
   targetBtn.toggleClass("bg-favorite");
 });
-
-favPlaceBtn.on("click", () => {
+favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
