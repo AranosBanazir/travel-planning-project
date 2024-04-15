@@ -98,15 +98,14 @@ function renderPlacesToList(places) {
   const categories = places.categories;
   const favBtn = $(`<button>`);
   const newListItem = $(`<li>`);
+  let name = places.name;
+
+  if (!name) {
+    name = places.address_line1;
+  }
 
   //TODO Check why names are undefined in the optional statement
   if (categories.includes("catering")) {
-    let name = places.name;
-
-    if (!name) {
-      name = places.address_line1;
-    }
-
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
 
