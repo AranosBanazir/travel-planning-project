@@ -1,11 +1,11 @@
 //This will be to render the saved information from LS
 //so that we can view previously scheduled trips by name, as well as the saved places of interest
 const backButton = $("#backButton");
+const tripList = $("#tripsList");
 
 // using this to test retrieving data from LS
 const testButton = $("#testButton");
 const testRender = $("#testRender");
-const tripList = $("#tripsList");
 
 //a function to pull info from LS
 function getLocalStorage(key) {
@@ -17,12 +17,14 @@ function saveLocalStorage(key, item) {
   localStorage.setItem(key.JSON.stringify(item));
 }
 // testing function to retrieve trips from LS
+// TODO remove the console.logs and remove dependency on clicking the button to render
 function getTrips() {
   const savedTrips = getLocalStorage("trips");
   console.log(savedTrips);
   return savedTrips;
 }
 //Make a function to render LS info to Page
+// TODO remove the console.logs and remove dependency on clicking the button to render
 function renderTrips() {
   const trips = getTrips();
   tripList.empty();
@@ -60,6 +62,8 @@ function getFavPlaceInfo(place) {
     });
   console.log(replacedPlaceStr);
 }
+
+// TODO remove the dependency on clicking the button to render
 testButton.on("click", () => {
   getTrips();
 });
