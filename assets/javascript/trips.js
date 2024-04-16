@@ -34,11 +34,11 @@ function renderTrips() {
     const tripCard = `
     <div class="collapse collapse-arrow bg-base-200">
     <input type="radio" name="my-accordion-2" checked="checked" />
-    <div class="collapse-title text-xl font-medium">${trip.trip}</div>
+    <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
     <div class="collapse-content">
-      <p>${trip.city}</p>
-      <p>${trip.startDate}<p>
-      <p>${trip.tripEndDate}</p>
+    <div id="map-${trip.id}" class="row-span-full">
+    <img src="https://placehold.co/600x400">
+    </div>
     </div>
   </div>`;
     tripList.append(tripCard);
