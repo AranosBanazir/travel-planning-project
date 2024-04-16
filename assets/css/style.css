@@ -4,9 +4,9 @@
     max-height: 1000px;
 }
 
-.collapse-content{
+/* .collapse-content{
     max-height: 300px;
-}
+} */
 
 input[type='checkbox'] {
     accent-color: gold;
