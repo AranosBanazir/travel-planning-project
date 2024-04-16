@@ -1,10 +1,15 @@
+$(document).ready(function (){
+
+
 //Declaring elements to be used to get values from the form
 const tripNameInput = $("#tripName"); //Text input on the modal for the name of the trip
 const tripStartDate = $("#startDate"); //Datepicker input for start of trip date
 const tripEndDate = $("#endDate"); //Datepicker input for end of trip date
 const cityInput = $("#cityInput"); //Name of city in which to visit
 const modalButton = $("#saveTrip"); //button inside modal to save trip
-const filter = $("#filterBtn"); //button to send the selected filters after the trip is picked
+const filter = $("#filterBtn");
+console.log(filter)
+//button to send the selected filters after the trip is picked
 const accordianDiv = $("#accordianDiv");
 const favPlaceList = $("#favPlaceList");
 // Button to transition to the favorite trips pages
@@ -79,6 +84,7 @@ function getCityInfo(id) {
     `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`
   )
     .then(function (response) {
+      console.log(response.json())
       return response.json();
     })
     .then(function (data) {
@@ -202,7 +208,9 @@ const btn = document.getElementById("filterBtn");
 //event listeners
 modalButton.on("click", handleSubmit);
 filter.on("click", function () {
+  console.log('getGeoId')
   getGeoId(getLocalStorage("currentCity"));
+  
 });
 let favListPair;
 const nameList = [];
@@ -217,3 +225,10 @@ accordianDiv.on("click", "button", function (e) {
 favPlaceBtn.on("click", () => {
   window.location.href = "./trips.html";
 });
+
+
+
+
+
+
+})
