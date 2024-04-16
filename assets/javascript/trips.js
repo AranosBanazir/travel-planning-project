@@ -33,16 +33,42 @@ function renderTrips() {
   const trips = getTrips();
   tripList.empty();
   trips.forEach((trip) => {
-    const tripCard = `
-    <div class="collapse collapse-arrow bg-base-200">
-    <input type="radio" name="my-accordion-2" checked="checked" />
-    <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
-    <div class="collapse-content">
-    <div id="map-${trip.id}" class="row-span-full">
-    <img src="https://placehold.co/600x400">
-    </div>
-    </div>
-  </div>`;
+//     const tripCard = `
+//     <div class="collapse collapse-arrow bg-base-200">
+//     <input type="radio" name="my-accordion-2" checked="checked" />
+//     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
+//     <div class="collapse-content">
+//     <div id="map-${trip.id}" class="row-span-full">
+//     <img src="https://placehold.co/600x400">
+//     </div>
+//     </div>
+//   </div>`;
+
+
+const tripCard = $(`
+<div class="collapse collapse-arrow bg-base-200 mt-2 mb-2">
+<input type="radio" name="my-accordion-2" />
+<div class="collapse-title text-xl text-center font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}
+ 
+</div>
+<div class="collapse-content">
+    <div class="flex flex-col w-full lg:flex-row">
+        <div class="grid flex-grow lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
+            <div id="map" class="row-span-full">
+                <img src="https://placehold.co/600x400">
+            </div>
+        </div> 
+        <div class="divider lg:divider-horizontal">
+        </div> 
+         <div class="flex flex-wrap gap-[3%]">
+            <div>
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <h2 class="card-title">Card title!</h2>
+                         <p>Test</p>
+                    </div>
+                 </div>
+            </div>`)
     tripList.append(tripCard);
   });
 }
@@ -99,6 +125,8 @@ themeButton.on('click', function(){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
   html[0].dataset.theme = 'light'
+}else{
+    html[0].dataset.theme = 'light'
 }
 
 saveLocalStorage('theme', html[0].dataset.theme)
@@ -106,5 +134,7 @@ saveLocalStorage('theme', html[0].dataset.theme)
 
 $(document).ready(function (){
   html[0].dataset.theme = getLocalStorage('theme') || 'light'
-  
+  if (!getLocalStorage('trips')){
+    location.href = './index.html'
+  }
 })

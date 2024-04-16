@@ -48,7 +48,7 @@ function handleSubmit(e) {
     !tripEndDate.val() ||
     !cityInput.val()
   ) {
-    console.log(tripNameInput.val());
+    // console.log(tripNameInput.val());
     const alert =
       $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -67,7 +67,7 @@ function handleSubmit(e) {
     alert.appendTo(alertDiv);
     $("#alertClose").on("click", function () {
       alertDiv.html("");
-      console.log("tried to close");
+   
     });
     return;
   }
@@ -84,9 +84,9 @@ function handleSubmit(e) {
   saveLocalStorage("trips", trips);
   saveLocalStorage("currentTrip", tripNameInput.val());
   saveLocalStorage("currentCity", cityInput.val());
+  saveLocalStorage('currentTripId', newTrip.id)
   getGeoId(cityInput.val(), true);
-  console.log(tripNameInput.val());
-  $("#tripModal").hideModal();
+  document.getElementById('newTripModal').close()
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -231,52 +231,88 @@ async function newMarker(location, type = "feature", lat, lon) {
 
 function addFavoriteToLocalStorage(favorite, name) {
   const address = favorite.dataset.address;
-  console.log(address);
+  // console.log(address);
   const trips = getLocalStorage("trips");
-  console.log(trips);
+  // console.log(trips);
   for (const trip of trips) {
-    if (trip.trip === getLocalStorage("currentTrip")) {
-      console.log(getLocalStorage("trips"));
+    if (trip.id === getLocalStorage("currentTripId")) {
+      
       trip.places.push({ name, address });
     }
   }
   saveLocalStorage("trips", trips);
 }
 
-const btn = document.getElementById("filterBtn");
+function removeFavoritesFromLocalStorage(favorite, name) {
+  const address = favorite.dataset.address;
+  // console.log(address);
+  const trips = getLocalStorage("trips");
+
+  // console.log(trips);
+  
+  for (const trip of trips) {
+    const placesArray = [];
+    if (trip.id === getLocalStorage("currentTripId")) {
+      for (let i =0; i < trip.places.length; i++){
+        if (trip.places[i].address == address){
+
+          console.log(trip.places[i], trip.places[i].name)
+          
+        }else{
+          placesArray.push({name: trip.places[i].name, address: trip.places[i].address})
+        }
+        
+      }
+      trip.places = placesArray
+  }
+ 
+
+  saveLocalStorage("trips", trips);
+  console.log(getLocalStorage("trips"));
+}
+}
+
+
+
 
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
   getGeoId(getLocalStorage("currentCity"));
 });
-let favListPair;
-const nameList = [];
+
+
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
-  console.log(e.target);
-  addFavoriteToLocalStorage(e.target, name);
+  // console.log(e)
+  if (e.target.className === 'bg-favorite'){
+    removeFavoritesFromLocalStorage(e.target, name)
+  }else{
+    addFavoriteToLocalStorage(e.target, name);
+  }
+  
   targetBtn.toggleClass("bg-favorite");
 });
+
+
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
 
 
 themeButton.on('click', function(){
-  console.log(html[0].dataset.theme)
+  // console.log(html[0].dataset.theme)
   if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'cyberpunk'
-  
-} else if (html[0].dataset.theme === 'cyberpunk'){
-  html[0].dataset.theme = 'retro'
+    html[0].dataset.theme = 'retro'
 } else if(html[0].dataset.theme === 'retro'){
   html[0].dataset.theme = 'halloween'
 } else if (html[0].dataset.theme === 'halloween'){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
   html[0].dataset.theme = 'light'
+}else{
+    html[0].dataset.theme = 'light'
 }
 
 saveLocalStorage('theme', html[0].dataset.theme)
