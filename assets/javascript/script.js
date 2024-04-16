@@ -229,34 +229,66 @@ async function newMarker(location, type = "feature", lat, lon) {
 
 function addFavoriteToLocalStorage(favorite, name) {
   const address = favorite.dataset.address;
-  console.log(address);
+  // console.log(address);
   const trips = getLocalStorage("trips");
-  console.log(trips);
+  // console.log(trips);
   for (const trip of trips) {
     if (trip.trip === getLocalStorage("currentTrip")) {
-      console.log(getLocalStorage("trips"));
+      // console.log(getLocalStorage("trips"));
       trip.places.push({ name, address });
     }
   }
   saveLocalStorage("trips", trips);
 }
 
-const btn = document.getElementById("filterBtn");
+function removeFavoritesFromLocalStorage(favorite, name) {
+  const address = favorite.dataset.address;
+  // console.log(address);
+  const trips = getLocalStorage("trips");
+  const placesArray = [];
+  // console.log(trips);
+  for (const trip of trips) {
+    if (trip.trip === getLocalStorage("currentTrip")) {
+      for (const place of trip.places) {
+        console.log(address);
+        console.log(place.address, place);
+        if (place.address !== address) {
+          console.log("entered in if statement");
+          placesArray.push({ name: place.name, address: place.address });
+          // trip.places.push({ name: place.name, address: place.address });
+        }
+      }
+    }
+  }
 
-//event listeners
-modalForm.on("submit", handleSubmit);
-filter.on("click", function () {
-  getGeoId(getLocalStorage("currentCity"));
-});
-let favListPair;
-const nameList = [];
-accordianDiv.on("click", "button", function (e) {
-  const name = e.target.innerText.split(".")[1];
-  const targetBtn = $(e.target);
-  console.log(e.target);
-  addFavoriteToLocalStorage(e.target, name);
-  targetBtn.toggleClass("bg-favorite");
-});
-favTripsBtn.on("click", function () {
-  window.location.href = "./trips.html";
-});
+  console.log(placesArray);
+  trips.places = placesArray;
+  //   // saveLocalStorage("trips", trips);
+  //   // console.log(getLocalStorage("trips"));
+  // }
+
+  const btn = document.getElementById("filterBtn");
+
+  //event listeners
+  modalForm.on("submit", handleSubmit);
+  filter.on("click", function () {
+    getGeoId(getLocalStorage("currentCity"));
+  });
+  let favListPair;
+  const nameList = [];
+  accordianDiv.on("click", "button", function (e) {
+    const name = e.target.innerText.split(".")[1];
+    const targetBtn = $(e.target);
+    // console.log(e.target);
+
+    if (e.target.className === "bg-favorite") {
+      removeFavoritesFromLocalStorage(e.target, name);
+    } else {
+      addFavoriteToLocalStorage(e.target, name);
+    }
+    targetBtn.toggleClass("bg-favorite");
+  });
+  favTripsBtn.on("click", function () {
+    window.location.href = "./trips.html";
+  });
+}
