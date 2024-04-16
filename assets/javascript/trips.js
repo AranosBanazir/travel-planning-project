@@ -1,5 +1,7 @@
 //This will be to render the saved information from LS
 //so that we can view previously scheduled trips by name, as well as the saved places of interest
+const html = $('html')
+const themeButton = $('#themeButton')
 const backButton = $("#backButton");
 const tripList = $("#tripsList");
 const deleteButton = $(".deleteTrip");
@@ -16,7 +18,7 @@ function getLocalStorage(key) {
 
 //a function to save LS data
 function saveLocalStorage(key, item) {
-  localStorage.setItem(key.JSON.stringify(item));
+  localStorage.setItem(key,JSON.stringify(item));
 }
 // testing function to retrieve trips from LS
 // TODO remove the console.logs and remove dependency on clicking the button to render
@@ -83,3 +85,26 @@ backButton.on("click", function () {
   //return to landing page
   window.location.href = "./index.html";
 });
+
+themeButton.on('click', function(){
+  console.log(html[0].dataset.theme)
+  if (html[0].dataset.theme === 'light') {
+    html[0].dataset.theme = 'cyberpunk'
+  
+} else if (html[0].dataset.theme === 'cyberpunk'){
+  html[0].dataset.theme = 'retro'
+} else if(html[0].dataset.theme === 'retro'){
+  html[0].dataset.theme = 'halloween'
+} else if (html[0].dataset.theme === 'halloween'){
+  html[0].dataset.theme = 'dark'
+} else if (html[0].dataset.theme === 'dark'){
+  html[0].dataset.theme = 'light'
+}
+
+saveLocalStorage('theme', html[0].dataset.theme)
+})
+
+$(document).ready(function (){
+  html[0].dataset.theme = getLocalStorage('theme') || 'light'
+  
+})
