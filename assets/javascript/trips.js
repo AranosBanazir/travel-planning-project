@@ -20,17 +20,11 @@ function getLocalStorage(key) {
 function saveLocalStorage(key, item) {
   localStorage.setItem(key,JSON.stringify(item));
 }
-// testing function to retrieve trips from LS
-// TODO remove the console.logs and remove dependency on clicking the button to render
-function getTrips() {
-  const savedTrips = getLocalStorage("trips");
-  console.log(savedTrips);
-  return savedTrips;
-}
+
 //Make a function to render LS info to Page
 // TODO remove the console.logs and remove dependency on clicking the button to render
 function renderTrips() {
-  const trips = getTrips();
+  const trips = getLocalStorage("trips");
   tripList.empty();
   trips.forEach((trip) => {
 //     const tripCard = `
@@ -48,36 +42,39 @@ function renderTrips() {
 const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2">
 <input type="radio" name="my-accordion-2" />
-<div class="collapse-title text-xl text-center font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}
- 
-</div>
+<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate}</div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
         <div class="grid flex-grow lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
-            <div id="map" class="row-span-full">
-                <img src="https://placehold.co/600x400">
+            <div id="map-${trip.id}" class="row-span-full">
+                
             </div>
         </div> 
         <div class="divider lg:divider-horizontal">
         </div> 
-         <div class="flex flex-wrap gap-[3%]">
-            <div>
-                <div class="card bg-base-100 shadow-xl">
-                    <div class="card-body">
-                        <h2 class="card-title">Card title!</h2>
-                         <p>Test</p>
-                    </div>
-                 </div>
+         <div id='placeCardDiv-${trip.id}' class="flex flex-wrap gap-[3%]">
+            
             </div>`)
+
+    
+    for (let i = 0; i < trip.places.length; i++){
+      getFavPlaceInfo(trip.places[i].address, trip.id)
+      
+    }
+
     tripList.append(tripCard);
+
+
+    //need to init map based on tripid
+    initMap(trip.coords.lat, trip.coords.lon, trip.id)
+
   });
 }
 
 function deleteTrip() {}
 
-function getFavPlaceInfo(place) {
-  const str = place + " in " + getLocalStorage("currentCity");
-  const replacedPlaceStr = str.replace(/\s/g, "%20");
+function getFavPlaceInfo(place, id) {
+  const replacedPlaceStr = place.replace(/\s/g, "%20");
   const url = `https://local-business-data.p.rapidapi.com/search?query=${replacedPlaceStr}&limit=20&zoom=13&language=en&region=us`;
   const options = {
     method: "GET",
@@ -92,10 +89,52 @@ function getFavPlaceInfo(place) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      const place = data.data[0].directory[0]
+      const placeCardDiv = $(`#placeCardDiv-${id}`)
+      const placeCard = $(`
+      <div>
+          <div class="card bg-base-100 shadow-xl">
+              <div class="card-body">
+                  <h2 class="card-title">${place.name}</h2>
+                   <p>Adress: ${place.address}</p>
+                   <p>Rating: ${place.rating} (${place.review_count} reviews)
+              </div>
+            </div>
+      </div>
+      `)
+      placeCard.appendTo(placeCardDiv)
     });
-  console.log(replacedPlaceStr);
+  
 }
+
+
+let map
+async function initMap(lat, lon, id) {
+  const mapEl = $(`#map-${id}`);
+  const position = { lat: lat, lng: lon };
+  // Request needed libraries.
+  const { Map } = await google.maps.importLibrary("maps");
+
+  map = new Map(document.querySelector(`#map-${id}`), {
+    zoom: 13,
+    center: position,
+    mapId: `${id}`,
+  });
+
+  mapEl.css("border-radius", "100px");
+  mapEl.css('z-index', '1')
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // TODO remove the dependency on clicking the button to render
 testButton.on("click", () => {
