@@ -16,7 +16,7 @@ function getLocalStorage(key) {
 
 //a function to save LS data
 function saveLocalStorage(key, item) {
-  localStorage.setItem(key.JSON.stringify(item));
+  localStorage.setItem(key, JSON.stringify(item));
 }
 // testing function to retrieve trips from LS
 // TODO remove the console.logs and remove dependency on clicking the button to render
