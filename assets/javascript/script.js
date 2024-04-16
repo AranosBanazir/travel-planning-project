@@ -1,4 +1,6 @@
 //Declaring elements to be used to get values from the form
+const html = $('html')
+const themeButton = $('#themeButton')
 const tripNameInput = $("#tripName"); //Text input on the modal for the name of the trip
 const tripStartDate = $("#startDate"); //Datepicker input for start of trip date
 const tripEndDate = $("#endDate"); //Datepicker input for end of trip date
@@ -260,3 +262,28 @@ accordianDiv.on("click", "button", function (e) {
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
+
+
+themeButton.on('click', function(){
+  console.log(html[0].dataset.theme)
+  if (html[0].dataset.theme === 'light') {
+    html[0].dataset.theme = 'cyberpunk'
+  
+} else if (html[0].dataset.theme === 'cyberpunk'){
+  html[0].dataset.theme = 'retro'
+} else if(html[0].dataset.theme === 'retro'){
+  html[0].dataset.theme = 'halloween'
+} else if (html[0].dataset.theme === 'halloween'){
+  html[0].dataset.theme = 'dark'
+} else if (html[0].dataset.theme === 'dark'){
+  html[0].dataset.theme = 'light'
+}
+
+saveLocalStorage('theme', html[0].dataset.theme)
+
+})
+
+$(document).ready(function (){
+  html[0].dataset.theme = getLocalStorage('theme') || 'light'
+  
+})
