@@ -64,8 +64,8 @@ function handleSubmit(e) {
 </div>`);
     alert.appendTo(alertDiv);
     $("#alertClose").on("click", function () {
-      alertDiv.html('')
-      console.log('tried to close')
+      alertDiv.html("");
+      console.log("tried to close");
     });
     return;
   }
@@ -75,6 +75,7 @@ function handleSubmit(e) {
     tripEndDate: tripEndDate.val(),
     city: cityInput.val(),
     id: Math.floor(Math.random() * 1000).toString(),
+    places: [],
   };
 
   trips.push(newTrip);
@@ -83,7 +84,7 @@ function handleSubmit(e) {
   saveLocalStorage("currentCity", cityInput.val());
   getGeoId(cityInput.val(), true);
   console.log(tripNameInput.val());
-  $("#tripModal").close();
+  $("#tripModal").hideModal();
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -139,7 +140,7 @@ function renderPlacesToList(places) {
   if (categories.includes("catering")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
-    favBtn.attr('data-address', places.address_line2)
+    favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(restaurantList);
     // console.log(places)
     // newMarker(location, 'catering', places.lat, places.lon)
@@ -226,7 +227,19 @@ async function newMarker(location, type = "feature", lat, lon) {
   });
 }
 
-function renderFavoritePlaces(place) {}
+function addFavoriteToLocalStorage(favorite, name) {
+  const address = favorite.dataset.address;
+  console.log(address);
+  const trips = getLocalStorage("trips");
+  console.log(trips);
+  for (const trip of trips) {
+    if (trip.trip === getLocalStorage("currentTrip")) {
+      console.log(getLocalStorage("trips"));
+      trip.places.push({ name, address });
+    }
+  }
+  saveLocalStorage("trips", trips);
+}
 
 const btn = document.getElementById("filterBtn");
 
@@ -240,9 +253,8 @@ const nameList = [];
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
-
-  renderFavoritePlaces(name);
-
+  console.log(e.target);
+  addFavoriteToLocalStorage(e.target, name);
   targetBtn.toggleClass("bg-favorite");
 });
 favTripsBtn.on("click", function () {
