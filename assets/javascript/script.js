@@ -5,7 +5,7 @@ const tripNameInput = $("#tripName"); //Text input on the modal for the name of 
 const tripStartDate = $("#startDate"); //Datepicker input for start of trip date
 const tripEndDate = $("#endDate"); //Datepicker input for end of trip date
 const cityInput = $("#cityInput"); //Name of city in which to visit
-const modalButton = $("#saveTrip"); //button inside modal to save trip
+const modalForm = $("#saveTrip"); //button inside modal to save trip
 const filter = $("#filterBtn"); //button to send the selected filters after the trip is picked
 const accordianDiv = $("#accordianDiv");
 const favPlaceList = $("#favPlaceList");
@@ -66,7 +66,8 @@ function handleSubmit(e) {
 </div>`);
     alert.appendTo(alertDiv);
     $("#alertClose").on("click", function () {
-      alertDiv.innerHTML = "";
+      alertDiv.html("");
+      console.log("tried to close");
     });
     return;
   }
@@ -76,6 +77,7 @@ function handleSubmit(e) {
     tripEndDate: tripEndDate.val(),
     city: cityInput.val(),
     id: Math.floor(Math.random() * 1000).toString(),
+    places: [],
   };
 
   trips.push(newTrip);
@@ -84,7 +86,7 @@ function handleSubmit(e) {
   saveLocalStorage("currentCity", cityInput.val());
   getGeoId(cityInput.val(), true);
   console.log(tripNameInput.val());
-  // $("#tripModal").modal("hide");
+  $("#tripModal").hideModal();
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -140,7 +142,7 @@ function renderPlacesToList(places) {
   if (categories.includes("catering")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
-
+    favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(restaurantList);
     // console.log(places)
     // newMarker(location, 'catering', places.lat, places.lon)
@@ -227,12 +229,24 @@ async function newMarker(location, type = "feature", lat, lon) {
   });
 }
 
-function renderFavoritePlaces(place) {}
+function addFavoriteToLocalStorage(favorite, name) {
+  const address = favorite.dataset.address;
+  console.log(address);
+  const trips = getLocalStorage("trips");
+  console.log(trips);
+  for (const trip of trips) {
+    if (trip.trip === getLocalStorage("currentTrip")) {
+      console.log(getLocalStorage("trips"));
+      trip.places.push({ name, address });
+    }
+  }
+  saveLocalStorage("trips", trips);
+}
 
 const btn = document.getElementById("filterBtn");
 
 //event listeners
-modalButton.on("submit", handleSubmit);
+modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
   getGeoId(getLocalStorage("currentCity"));
 });
@@ -241,9 +255,8 @@ const nameList = [];
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
-
-  renderFavoritePlaces(name);
-
+  console.log(e.target);
+  addFavoriteToLocalStorage(e.target, name);
   targetBtn.toggleClass("bg-favorite");
 });
 favTripsBtn.on("click", function () {
