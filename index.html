@@ -21,7 +21,7 @@
     <!-- CS: Added 20 margin to nav -->
     <nav class="mb-20"> 
       <div class="navbar bg-base-100">
-        <div class="navbar-start">
+        <div class="navbar-start flex ">
           <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
               <svg
@@ -45,7 +45,7 @@
             >
               <li>
                 <a>Places To Stay</a>
-                <ul class="p-2 z-100">
+                <ul class="p-2 z-100 ">
                   <div class="form-control">
                     <label class="cursor-pointer label">
                       <span class="label-text">Hotels</span>
@@ -295,6 +295,7 @@
               </li>
             </ul>
           </div>
+          <!-- Nav Bar Codes Here -->
           <a class="btn btn-ghost text-xl">Awesome Travel Planner </a>
         </div>
         <div class="navbar-start hidden md:flex">
@@ -608,14 +609,18 @@
           </ul>
         
         </div>
+        <!-- Nav Bar button codes here -->
         <div class="navbar-end">
-          <button class="btn" id="filterBtn">Apply Filters</button>
-          <button class="btn" id="favTripsBtn">Favorites</button>
-          <!-- Open the modal using ID.showModal() method -->
-          <button class="btn btn-primary" id="themeButton">Change Theme</button>
-          <button class="btn" onclick="newTripModal.showModal()">
-            Create New Trip
-          </button>
+          <div class="md:flex">
+            <button class="btn mr-[10px]" id="filterBtn">Apply Filters</button>
+            <button class="btn mr-[10px]" id="favTripsBtn">Favorites</button>
+            <!-- Open the modal using ID.showModal() method -->
+            <button class="btn btn-primary mr-[10px]" id="themeButton">Change Theme</button>
+            <button class="btn mr-[10px]" onclick="newTripModal.showModal()">
+              Create New Trip
+            </button>
+          </div>
+
           <dialog id="newTripModal" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box">
               <h3 class="font-bold text-lg">Plan Your Awesome Trip!!!</h3>
@@ -639,17 +644,18 @@
         </div>
       </div>
     </nav>
-    <div class="flex flex-wrap">
+    <!-- Accordian and main image codes here -->
+    <div class="flex justify-center ">
       <div id="map" class="w-[600px] h-[400px] sm:max-h-[100%] lg:max-h-[100%] sm:max-w-[50%] lg:max-w-[100%]">
 
-        <img src="./assets/images/map_of_world.jpg" alt="world-map-image">
+        <img src="./assets/images/map_of_world.jpg" alt="an image of world map">
 
 
 
       </div>
       <section id="places" class="lg:max-w-[100%]">
         <div id="accordianDiv" class="row-span-full w-[600px] lg:max-w-[100%]">
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" /> 
             <div class="collapse-title text-xl font-medium">
               Places To Stay
@@ -660,7 +666,7 @@
               </ul>
             </div>
           </div>
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" /> 
             <div class="collapse-title text-xl font-medium">
               Restaurants
@@ -673,7 +679,7 @@
               </div>
             </div>
           </div>
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
               Clothing
@@ -684,7 +690,7 @@
               </ul>
             </div>
           </div>
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
               Airports
@@ -695,7 +701,7 @@
               </ul>
             </div>
           </div>
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
               Entertainment
@@ -706,7 +712,7 @@
               </ul>
             </div>
           </div>
-          <div class="collapse bg-base-200">
+          <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" /> 
             <div class="collapse-title text-xl font-medium">
               Health Care
@@ -722,7 +728,9 @@
     </div>
 
 
-
+    <footer class="text-center font-bold">
+      <h3>Made with ❤️ by 3 awesome passionate student. 😎😁</h3>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!--CDN for Jquery -->
