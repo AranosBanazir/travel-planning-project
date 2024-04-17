@@ -12,6 +12,12 @@ const favPlaceList = $("#favPlaceList");
 // Button to transition to the favorite trips pages
 const favTripsBtn = $("#favTripsBtn");
 const alertDiv = $("#alertDiv");
+const restaurantList = $("#restaurantList");
+const airportList = $("#airportList");
+const hotelList = $("#hotelList");
+const clothingList = $("#clothingList");
+const healthcareList = $("#healthcareList")
+const entertainmentList = $("#entertainmentList")
 
 let cityInfo = [];
 
@@ -138,12 +144,7 @@ function getCityInfo(id) {
 }
 let markercount = 1;
 function renderPlacesToList(places) {
-  const restaurantList = $("#restaurantList");
-  const airportList = $("#airportList");
-  const hotelList = $("#hotelList");
-  const clothingList = $("#clothingList");
-  const healthcareList = $("#healthcareList")
-  const entertainmentList = $("#entertainmentList")
+
   const categories = places.categories;
   const favBtn = $(`<button>`);
   const newListItem = $(`<li>`);
