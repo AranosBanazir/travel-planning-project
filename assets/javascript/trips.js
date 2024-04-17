@@ -89,8 +89,20 @@ function getFavPlaceInfo(place, id) {
       return response.json();
     })
     .then(function (data) {
+      if (!data.data[0].directory){
+        return
+      }
+
       const place = data.data[0].directory[0]
       const placeCardDiv = $(`#placeCardDiv-${id}`)
+      let priceRange = ''
+
+      if (place.price_range){
+        priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`
+      }
+
+
+
       const placeCard = $(`
       <div>
           <div class="card bg-base-100 shadow-xl">
@@ -98,6 +110,7 @@ function getFavPlaceInfo(place, id) {
                   <h2 class="card-title">${place.name}</h2>
                    <p>Adress: ${place.address}</p>
                    <p>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
+                   ${priceRange}
               </div>
             </div>
       </div>
