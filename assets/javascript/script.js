@@ -1,6 +1,6 @@
 //Declaring elements to be used to get values from the form
-const html = $('html')
-const themeButton = $('#themeButton')
+const html = $("html");
+const themeButton = $("#themeButton");
 const tripNameInput = $("#tripName"); //Text input on the modal for the name of the trip
 const tripStartDate = $("#startDate"); //Datepicker input for start of trip date
 const tripEndDate = $("#endDate"); //Datepicker input for end of trip date
@@ -236,13 +236,12 @@ function addFavoriteToLocalStorage(favorite, name) {
   // console.log(trips);
   for (const trip of trips) {
     if (trip.trip === getLocalStorage("currentTrip")) {
-      // console.log(getLocalStorage("trips"));
+      console.log(getLocalStorage("trips"));
       trip.places.push({ name, address });
     }
   }
   saveLocalStorage("trips", trips);
 }
-
 function removeFavoritesFromLocalStorage(favorite, name) {
   const address = favorite.dataset.address;
   // console.log(address);
@@ -263,39 +262,14 @@ function removeFavoritesFromLocalStorage(favorite, name) {
     }
   }
 
-<<<<<<< HEAD
   console.log(placesArray);
   trips.places = placesArray;
-  //   // saveLocalStorage("trips", trips);
-  //   // console.log(getLocalStorage("trips"));
-  // }
-
-  const btn = document.getElementById("filterBtn");
-
-  //event listeners
-  modalForm.on("submit", handleSubmit);
-  filter.on("click", function () {
-    getGeoId(getLocalStorage("currentCity"));
-  });
-  let favListPair;
-  const nameList = [];
-  accordianDiv.on("click", "button", function (e) {
-    const name = e.target.innerText.split(".")[1];
-    const targetBtn = $(e.target);
-    // console.log(e.target);
-
-    if (e.target.className === "bg-favorite") {
-      removeFavoritesFromLocalStorage(e.target, name);
-    } else {
-      addFavoriteToLocalStorage(e.target, name);
-    }
-    targetBtn.toggleClass("bg-favorite");
-  });
-  favTripsBtn.on("click", function () {
-    window.location.href = "./trips.html";
-  });
+  // saveLocalStorage("trips", trips);
+  // console.log(getLocalStorage("trips"));
 }
-=======
+
+const btn = document.getElementById("filterBtn");
+
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
@@ -306,36 +280,36 @@ const nameList = [];
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
-  console.log(e.target);
-  addFavoriteToLocalStorage(e.target, name);
+  // console.log(e.target);
+
+  if (e.target.className === "bg-favorite") {
+    removeFavoritesFromLocalStorage(e.target, name);
+  } else {
+    addFavoriteToLocalStorage(e.target, name);
+  }
   targetBtn.toggleClass("bg-favorite");
 });
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
 
+themeButton.on("click", function () {
+  console.log(html[0].dataset.theme);
+  if (html[0].dataset.theme === "light") {
+    html[0].dataset.theme = "cyberpunk";
+  } else if (html[0].dataset.theme === "cyberpunk") {
+    html[0].dataset.theme = "retro";
+  } else if (html[0].dataset.theme === "retro") {
+    html[0].dataset.theme = "halloween";
+  } else if (html[0].dataset.theme === "halloween") {
+    html[0].dataset.theme = "dark";
+  } else if (html[0].dataset.theme === "dark") {
+    html[0].dataset.theme = "light";
+  }
 
-themeButton.on('click', function(){
-  console.log(html[0].dataset.theme)
-  if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'cyberpunk'
-  
-} else if (html[0].dataset.theme === 'cyberpunk'){
-  html[0].dataset.theme = 'retro'
-} else if(html[0].dataset.theme === 'retro'){
-  html[0].dataset.theme = 'halloween'
-} else if (html[0].dataset.theme === 'halloween'){
-  html[0].dataset.theme = 'dark'
-} else if (html[0].dataset.theme === 'dark'){
-  html[0].dataset.theme = 'light'
-}
+  saveLocalStorage("theme", html[0].dataset.theme);
+});
 
-saveLocalStorage('theme', html[0].dataset.theme)
-
-})
-
-$(document).ready(function (){
-  html[0].dataset.theme = getLocalStorage('theme') || 'light'
-  
-})
->>>>>>> bf4e7cd86640a765846f0ba795e6a9c09757da73
+$(document).ready(function () {
+  html[0].dataset.theme = getLocalStorage("theme") || "light";
+});
