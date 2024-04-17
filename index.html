@@ -379,7 +379,7 @@
               <details>
                 <summary>Airports</summary>
                 <ul class="p-2" style="z-index: 1;">
-                  <li>12345
+                  <li>
                     <div class="form-control">
                       <label class="cursor-pointer label">
                         <span class="label-text">Airports</span>
@@ -440,16 +440,16 @@
         </div>
       </div>
     </nav>
-    <div class="grid grid-rows-3 grid-flow-col gap-4">
-      <div id="map" class="row-span-full">
+    <div class="flex flex-wrap">
+      <div id="map" class="w-[600px] h-[400px] sm:max-h-[100%] lg:max-h-[100%] sm:max-w-[50%] lg:max-w-[100%]">
 
         <img src="https://placehold.co/600x400">
 
 
 
       </div>
-      <section id="places" class="grid grid-rows-3 grid-flow-col gap-4">
-        <div id="accordianDiv" class="row-span-full" >
+      <section id="places" class="lg:max-w-[100%]">
+        <div id="accordianDiv" class="row-span-full w-[600px] lg:max-w-[100%]">
           <div class="collapse bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" /> 
             <div class="collapse-title text-xl font-medium">
@@ -496,12 +496,6 @@
               </ul>
             </div>
           </div>
-        </div>
-        <div id="favList" class="row-span-full">
-          <h2>Favorite Places</h2>
-          <ul id="favPlaceList">
-            
-          </ul>
         </div>
       </section>
     </div>

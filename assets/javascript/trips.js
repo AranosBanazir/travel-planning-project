@@ -89,15 +89,15 @@ backButton.on("click", function () {
 themeButton.on('click', function(){
   console.log(html[0].dataset.theme)
   if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'cyberpunk'
+    html[0].dataset.theme = 'retro'
   
-} else if (html[0].dataset.theme === 'cyberpunk'){
-  html[0].dataset.theme = 'retro'
-} else if(html[0].dataset.theme === 'retro'){
+} else if (html[0].dataset.theme === 'retro'){
   html[0].dataset.theme = 'halloween'
-} else if (html[0].dataset.theme === 'halloween'){
+} else if(html[0].dataset.theme === 'halloween'){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
+  html[0].dataset.theme = 'light'
+} else {
   html[0].dataset.theme = 'light'
 }
 
