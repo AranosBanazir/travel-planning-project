@@ -92,9 +92,9 @@ function getFavPlaceInfo(place, id) {
       const place = data.data[0].directory[0]
       const placeCardDiv = $(`#placeCardDiv-${id}`)
       const placeCard = $(`
-      <div>
+      <div class="flex flex-wrap">
           <div class="card bg-base-100 shadow-xl">
-              <div class="card-body">
+              <div class="card-body mb-5">
                   <h2 class="card-title">${place.name}</h2>
                    <p>Adress: ${place.address}</p>
                    <p>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
