@@ -289,7 +289,7 @@ function addFavoriteToLocalStorage(favorite, name) {
   saveLocalStorage("trips", trips);
 }
 
-function removeFavoritesFromLocalStorage(favorite, name) {
+function removeFavoritesFromLocalStorage(favorite) {
   const address = favorite.dataset.address;
   // console.log(address);
   const trips = getLocalStorage("trips");
@@ -302,7 +302,6 @@ function removeFavoritesFromLocalStorage(favorite, name) {
       for (let i =0; i < trip.places.length; i++){
         if (trip.places[i].address == address){
 
-          console.log(trip.places[i], trip.places[i].name)
           
         }else{
           placesArray.push({name: trip.places[i].name, address: trip.places[i].address})
@@ -314,7 +313,6 @@ function removeFavoritesFromLocalStorage(favorite, name) {
  
 
   saveLocalStorage("trips", trips);
-  console.log(getLocalStorage("trips"));
 }
 }
 
@@ -333,7 +331,7 @@ accordianDiv.on("click", "button", function (e) {
   const targetBtn = $(e.target);
   // console.log(e)
   if (e.target.className === 'bg-favorite'){
-    removeFavoritesFromLocalStorage(e.target, name)
+    removeFavoritesFromLocalStorage(e.target)
   }else{
     addFavoriteToLocalStorage(e.target, name);
   }
