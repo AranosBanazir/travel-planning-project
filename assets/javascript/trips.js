@@ -92,17 +92,10 @@ function getFavPlaceInfo(place, id) {
         return;
       }
 
-<<<<<<< HEAD
-      const place = data.data[0].directory[0]
-      console.log(place)
-      const placeCardDiv = $(`#placeCardDiv-${id}`)
-      let priceRange = '<p></p>'
-=======
       const place = data.data[0].directory[0];
       console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
       let priceRange = "";
->>>>>>> f024f05203b7939b8cfc6c3dbbd0e7072f77430f
 
       if (place.price_range) {
         priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`;
