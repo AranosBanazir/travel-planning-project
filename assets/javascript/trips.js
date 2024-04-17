@@ -79,7 +79,7 @@ function getFavPlaceInfo(place, id) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "8e3d00daf4mshd8fb0721ff0ee65p100d76jsnde8f75dad54d",
+      "X-RapidAPI-Key": "576ec6d674mshbcba8edd5142f37p131159jsn7f3f59491acb",
       "X-RapidAPI-Host": "local-business-data.p.rapidapi.com",
     },
   };
@@ -89,34 +89,49 @@ function getFavPlaceInfo(place, id) {
       return response.json();
     })
     .then(function (data) {
+      if (!data.data[0].directory){
+        return
+      }
+
       const place = data.data[0].directory[0]
+      console.log(place)
       const placeCardDiv = $(`#placeCardDiv-${id}`)
+      let priceRange = ''
+
+      if (place.price_range){
+        priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`
+      }
+
+
+
       const placeCard = $(`
       <div class="flex flex-wrap">
-          <div class="card bg-base-100 shadow-xl">
+          <div class="card bg-base-100 shadow-xl w-[400px] h-[400px]">
               <div class="card-body mb-5">
                   <h2 class="card-title">${place.name}</h2>
-                   <p>Adress: ${place.address}</p>
-                   <p>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
+                   <p class = 'break-words'>Adress: ${place.address}</p>
+                   <p class = 'break-words'>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
+                   ${priceRange}
               </div>
             </div>
       </div>
       `) 
       placeCard.appendTo(placeCardDiv)
+      newMarker(id, place.name, place.latitude, place.longitude)
     });
   
 }
 
 
-let map
+const maps = []
 async function initMap(lat, lon, id) {
   const mapEl = $(`#map-${id}`);
   const position = { lat: lat, lng: lon };
   // Request needed libraries.
   const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(document.querySelector(`#map-${id}`), {
-    zoom: 13,
+  maps[id] = new Map(document.querySelector(`#map-${id}`), {
+    zoom: 10,
     center: position,
     mapId: `${id}`,
   });
@@ -126,7 +141,17 @@ async function initMap(lat, lon, id) {
 }
 
 
+async function newMarker(id, name, lat, lon) {
+  const position = { lat: lat, lng: lon };
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+ 
 
+  const marker = new AdvancedMarkerElement({
+    map: maps[id], 
+    position: position,
+    title: `${name}`,
+  });
+}
 
 
 
