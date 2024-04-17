@@ -142,6 +142,8 @@ function renderPlacesToList(places) {
   const airportList = $("#airportList");
   const hotelList = $("#hotelList");
   const clothingList = $("#clothingList");
+  const healthcareList = $("#healthcareList")
+  const entertainmentList = $("#entertainmentList")
   const categories = places.categories;
   const favBtn = $(`<button>`);
   const newListItem = $(`<li>`);
