@@ -16,8 +16,8 @@ const restaurantList = $("#restaurantList");
 const airportList = $("#airportList");
 const hotelList = $("#hotelList");
 const clothingList = $("#clothingList");
-const healthcareList = $("#healthcareList")
-const entertainmentList = $("#entertainmentList")
+const healthcareList = $("#healthcareList");
+const entertainmentList = $("#entertainmentList");
 
 let cityInfo = [];
 
@@ -58,8 +58,8 @@ function clearLists() {
   ];
   for (const list of lists) {
     const listAccordion = $(`#${list}List`);
-    console.log(list);
-    console.log(listAccordion);
+    // console.log(list);
+    // console.log(listAccordion);
     listAccordion.empty();
   }
   markercount = 1;
@@ -340,8 +340,14 @@ function removeFavoritesFromLocalStorage(favorite) {
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
-  clearLists();
-  getGeoId(getLocalStorage("currentCity"));
+  const currentStorage = getLocalStorage("trips");
+  console.log(currentStorage);
+  if (currentStorage.length == 0) {
+    console.log("entering if statement");
+  } else {
+    clearLists();
+    getGeoId(getLocalStorage("currentCity"));
+  }
 });
 
 accordianDiv.on("click", "button", function (e) {
