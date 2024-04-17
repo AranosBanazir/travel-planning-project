@@ -41,7 +41,7 @@
             </div>
             <ul
               tabindex="0"
-              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-42"
             >
               <li>
                 <a>Places To Stay</a>
@@ -202,13 +202,102 @@
                     </label>
                   </div>
                 </ul>
-                
+              </li>
+              <li>
+                <a>Entertainment</a>
+                <ul class="p-2 z-100">
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Theme Park</span>
+                      <input
+                        type="checkbox"
+                        data-categories="entertainment.theme_park"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Zoo</span>
+                      <input
+                        type="checkbox"
+                        data-categories="entertainment.zoo"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Aquarium</span>
+                      <input
+                        type="checkbox"
+                        data-categories="entertainment.aquarium"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Museum</span>
+                      <input
+                        type="checkbox"
+                        data-categories="entertainment.museum"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Cinema</span>
+                      <input
+                        type="checkbox"
+                        data-categories="entertainment.cinema"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                </ul>
+              </li>
+              <li>
+                <a>Health Care</a>
+                <ul class="p-2 z-100">
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Hospitals</span>
+                      <input
+                        type="checkbox"
+                        data-categories="healthcare.hospital"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Pharmacy</span>
+                      <input
+                        type="checkbox"
+                        data-categories="healthcare.pharmacy"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text">Generals</span>
+                      <input
+                        type="checkbox"
+                        data-categories="healthcare.clinic_or_praxis.general"
+                        class="checkbox checkbox-error"
+                      />
+                    </label>
+                  </div>
+                </ul>
               </li>
             </ul>
           </div>
           <a class="btn btn-ghost text-xl">Awesome Travel Planner </a>
         </div>
-        <div class="navbar-center hidden lg:flex">
+        <div class="navbar-start hidden md:flex">
           <ul class="menu menu-horizontal px-1">
             <li class="z-100">
               <details>
@@ -406,6 +495,116 @@
                 </ul>
               </details>
             </li>
+            <li>
+              <details>
+                <summary>Entertainment</summary>
+                <ul class="p-2" style="z-index: 1;">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Theme Park</span>
+                        <input
+                          type="checkbox"
+                          data-categories="entertainment.theme_park"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Zoo</span>
+                        <input
+                          type="checkbox"
+                          data-categories="entertainment.zoo"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Aquarium</span>
+                        <input
+                          type="checkbox"
+                          data-categories="entertainment.aquarium"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Museum</span>
+                        <input
+                          type="checkbox"
+                          data-categories="entertainment.museum"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Cinema</span>
+                        <input
+                          type="checkbox"
+                          data-categories="entertainment.cinema"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Health Care</summary>
+                <ul class="p-2" style="z-index: 1;">
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Hospitals</span>
+                        <input
+                          type="checkbox"
+                          data-categories="healthcare.hospital"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Pharmacy</span>
+                        <input
+                          type="checkbox"
+                          data-categories="healthcare.pharmacy"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-control">
+                      <label class="cursor-pointer label">
+                        <span class="label-text">Generals</span>
+                        <input
+                          type="checkbox"
+                          data-categories="healthcare.clinic_or_praxis.general"
+                          class="checkbox checkbox-error"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </details>
+            </li>
           </ul>
         
         </div>
@@ -443,7 +642,7 @@
     <div class="flex flex-wrap">
       <div id="map" class="w-[600px] h-[400px] sm:max-h-[100%] lg:max-h-[100%] sm:max-w-[50%] lg:max-w-[100%]">
 
-        <img src="https://placehold.co/600x400">
+        <img src="./assets/images/map_of_world.jpg" alt="world-map-image">
 
 
 
@@ -492,6 +691,28 @@
             </div>
             <div class="collapse-content"> 
               <ul id="airportList">
+                
+              </ul>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" /> 
+            <div class="collapse-title text-xl font-medium">
+              Entertainment
+            </div>
+            <div class="collapse-content"> 
+              <ul id="entertainmentList">
+                
+              </ul>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" /> 
+            <div class="collapse-title text-xl font-medium">
+              Health Care
+            </div>
+            <div class="collapse-content"> 
+              <ul id="healthcareList">
                 
               </ul>
             </div>

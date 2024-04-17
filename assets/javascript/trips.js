@@ -97,11 +97,11 @@ function getFavPlaceInfo(place, id) {
               <div class="card-body">
                   <h2 class="card-title">${place.name}</h2>
                    <p>Adress: ${place.address}</p>
-                   <p>Rating: ${place.rating} (${place.review_count} reviews)
+                   <p>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
               </div>
             </div>
       </div>
-      `)
+      `) 
       placeCard.appendTo(placeCardDiv)
     });
   
