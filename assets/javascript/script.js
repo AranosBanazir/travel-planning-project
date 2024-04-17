@@ -1,6 +1,6 @@
 //Declaring elements to be used to get values from the form
-const html = $('html')
-const themeButton = $('#themeButton')
+const html = $("html");
+const themeButton = $("#themeButton");
 const tripNameInput = $("#tripName"); //Text input on the modal for the name of the trip
 const tripStartDate = $("#startDate"); //Datepicker input for start of trip date
 const tripEndDate = $("#endDate"); //Datepicker input for end of trip date
@@ -35,15 +35,34 @@ function getCategories(num) {
     categories.push(options[i].dataset.categories);
   }
 
-  if (num){
-    return options.length
+  if (num) {
+    return options.length;
   }
   return categories.toString();
+}
+
+function clearLists() {
+  const lists = [
+    "restaurant",
+    "airport",
+    "hotel",
+    "clothing",
+    "healthcare",
+    "entertainment",
+  ];
+  for (const list of lists) {
+    const listAccordion = $(`#${list}List`);
+    console.log(list);
+    console.log(listAccordion);
+    listAccordion.empty();
+  }
+  markercount = 1;
 }
 
 //handles the modal submit to set up where information will be saved
 function handleSubmit(e) {
   e.preventDefault();
+  clearLists();
   const trips = getLocalStorage("trips");
   if (
     !tripNameInput.val() ||
@@ -70,7 +89,6 @@ function handleSubmit(e) {
     alert.appendTo(alertDiv);
     $("#alertClose").on("click", function () {
       alertDiv.html("");
-   
     });
     return;
   }
@@ -88,9 +106,9 @@ function handleSubmit(e) {
   saveLocalStorage("trips", trips);
   saveLocalStorage("currentTrip", tripNameInput.val());
   saveLocalStorage("currentCity", cityInput.val());
-  saveLocalStorage('currentTripId', newTrip.id)
+  saveLocalStorage("currentTripId", newTrip.id);
   getGeoId(cityInput.val(), true);
-  document.getElementById('newTripModal').close()
+  document.getElementById("newTripModal").close();
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -109,20 +127,23 @@ function getGeoId(place, initial) {
         getCityInfo(id); //this returns the internal ID for the given city from the Geoapify api
       }
       // console.log(initial)
-      const trips = getLocalStorage('trips')
+      const trips = getLocalStorage("trips");
 
       for (const trip of trips) {
-        if (trip.id === getLocalStorage("currentTripId")){
-          trip.coords = {lat:data.features[0].properties.lat, lon: data.features[0].properties.lon }
+        if (trip.id === getLocalStorage("currentTripId")) {
+          trip.coords = {
+            lat: data.features[0].properties.lat,
+            lon: data.features[0].properties.lon,
+          };
         }
       }
-      saveLocalStorage('trips', trips)
+      saveLocalStorage("trips", trips);
     });
 }
 
 function getCityInfo(id) {
   //fetch information from Geoapify
-  const limit = getCategories(true) * 20
+  const limit = getCategories(true) * 20;
   fetch(
     `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=${limit}&apiKey=${geoKey}`
   )
@@ -142,8 +163,8 @@ function renderPlacesToList(places) {
   const airportList = $("#airportList");
   const hotelList = $("#hotelList");
   const clothingList = $("#clothingList");
-  const healthcareList = $("#healthcareList")
-  const entertainmentList = $("#entertainmentList")
+  const healthcareList = $("#healthcareList");
+  const entertainmentList = $("#entertainmentList");
   const categories = places.categories;
   const favBtn = $(`<button>`);
   const newListItem = $(`<li>`);
@@ -159,37 +180,37 @@ function renderPlacesToList(places) {
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(restaurantList);
-    newMarker(location, 'catering', places.lat, places.lon, markercount)
+    newMarker(location, "catering", places.lat, places.lon, markercount);
   } else if (categories.includes("accommodations")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(hotelList);
-    newMarker(location, 'accommidation', places.lat, places.lon, markercount)
-  } else if (categories.includes("airport")){
+    newMarker(location, "accommidation", places.lat, places.lon, markercount);
+  } else if (categories.includes("airport")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(airportList);
-    newMarker(location, 'airport', places.lat, places.lon, markercount)
-  }else if (categories.includes("healthcare")){
+    newMarker(location, "airport", places.lat, places.lon, markercount);
+  } else if (categories.includes("healthcare")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(healthcareList);
-    newMarker(location, 'healthcare', places.lat, places.lon, markercount)
-  }else if (categories.includes("entertainment")){
+    newMarker(location, "healthcare", places.lat, places.lon, markercount);
+  } else if (categories.includes("entertainment")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(entertainmentList);
-    newMarker(location, 'entertainment', places.lat, places.lon, markercount)
-  }else if (categories.includes("commercial.clothing")){
+    newMarker(location, "entertainment", places.lat, places.lon, markercount);
+  } else if (categories.includes("commercial.clothing")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(clothingList);
-    newMarker(location, 'commercial', places.lat, places.lon, markercount)
+    newMarker(location, "commercial", places.lat, places.lon, markercount);
   }
 
   markercount++;
@@ -284,7 +305,6 @@ function addFavoriteToLocalStorage(favorite, name) {
   // console.log(trips);
   for (const trip of trips) {
     if (trip.id === getLocalStorage("currentTripId")) {
-      
       trip.places.push({ name, address });
     }
   }
@@ -297,75 +317,67 @@ function removeFavoritesFromLocalStorage(favorite) {
   const trips = getLocalStorage("trips");
 
   // console.log(trips);
-  
+
   for (const trip of trips) {
     const placesArray = [];
     if (trip.id === getLocalStorage("currentTripId")) {
-      for (let i =0; i < trip.places.length; i++){
-        if (trip.places[i].address == address){
-
-          
-        }else{
-          placesArray.push({name: trip.places[i].name, address: trip.places[i].address})
+      for (let i = 0; i < trip.places.length; i++) {
+        if (trip.places[i].address == address) {
+        } else {
+          placesArray.push({
+            name: trip.places[i].name,
+            address: trip.places[i].address,
+          });
         }
-        
       }
-      trip.places = placesArray
+      trip.places = placesArray;
+    }
+
+    saveLocalStorage("trips", trips);
   }
- 
-
-  saveLocalStorage("trips", trips);
 }
-}
-
-
-
 
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
+  clearLists();
   getGeoId(getLocalStorage("currentCity"));
 });
-
 
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
   // console.log(e)
-  if (e.target.className === 'bg-favorite'){
-    removeFavoritesFromLocalStorage(e.target)
-  }else{
+  if (e.target.className === "bg-favorite") {
+    removeFavoritesFromLocalStorage(e.target);
+  } else {
     addFavoriteToLocalStorage(e.target, name);
   }
-  
+
   targetBtn.toggleClass("bg-favorite");
 });
-
 
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
 
-
-themeButton.on('click', function(){
+themeButton.on("click", function () {
   // console.log(html[0].dataset.theme)
-  if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'retro'
-} else if(html[0].dataset.theme === 'retro'){
-  html[0].dataset.theme = 'halloween'
-} else if(html[0].dataset.theme === 'halloween'){
-  html[0].dataset.theme = 'dark'
-} else if (html[0].dataset.theme === 'dark'){
-  html[0].dataset.theme = 'light'
-}else{
-    html[0].dataset.theme = 'light'
-}
+  if (html[0].dataset.theme === "light") {
+    html[0].dataset.theme = "retro";
+  } else if (html[0].dataset.theme === "retro") {
+    html[0].dataset.theme = "halloween";
+  } else if (html[0].dataset.theme === "halloween") {
+    html[0].dataset.theme = "dark";
+  } else if (html[0].dataset.theme === "dark") {
+    html[0].dataset.theme = "light";
+  } else {
+    html[0].dataset.theme = "light";
+  }
 
-saveLocalStorage('theme', html[0].dataset.theme)
+  saveLocalStorage("theme", html[0].dataset.theme);
+});
 
-})
-
-$(document).ready(function (){
-  html[0].dataset.theme = getLocalStorage('theme') || 'light'
-  
-})
+$(document).ready(function () {
+  html[0].dataset.theme = getLocalStorage("theme") || "light";
+});
