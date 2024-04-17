@@ -45,8 +45,8 @@ const tripCard = $(`
 <div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate}</div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
-        <div class="grid flex-grow lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
-            <div id="map-${trip.id}" class="row-span-full">
+        <div style='background-color: transparent;' class="grid flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
+            <div id="map-${trip.id}" class="w-[100%] h-[100%] row-span-full">
                 
             </div>
         </div> 
@@ -154,13 +154,11 @@ backButton.on("click", function () {
 themeButton.on('click', function(){
   console.log(html[0].dataset.theme)
   if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'cyberpunk'
+    html[0].dataset.theme = 'retro'
   
-} else if (html[0].dataset.theme === 'cyberpunk'){
-  html[0].dataset.theme = 'retro'
-} else if(html[0].dataset.theme === 'retro'){
+} else if (html[0].dataset.theme === 'retro'){
   html[0].dataset.theme = 'halloween'
-} else if (html[0].dataset.theme === 'halloween'){
+} else if(html[0].dataset.theme === 'halloween'){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
   html[0].dataset.theme = 'light'

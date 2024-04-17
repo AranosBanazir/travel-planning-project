@@ -353,7 +353,7 @@ themeButton.on('click', function(){
     html[0].dataset.theme = 'retro'
 } else if(html[0].dataset.theme === 'retro'){
   html[0].dataset.theme = 'halloween'
-} else if (html[0].dataset.theme === 'halloween'){
+} else if(html[0].dataset.theme === 'halloween'){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
   html[0].dataset.theme = 'light'
