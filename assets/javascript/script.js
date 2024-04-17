@@ -28,13 +28,16 @@ function saveLocalStorage(key, item) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-function getCategories() {
+function getCategories(num) {
   const options = $("nav input:checked");
   const categories = [];
   for (let i = 0; i < options.length; i++) {
     categories.push(options[i].dataset.categories);
   }
 
+  if (num){
+    return options.length
+  }
   return categories.toString();
 }
 
@@ -48,7 +51,7 @@ function handleSubmit(e) {
     !tripEndDate.val() ||
     !cityInput.val()
   ) {
-    console.log(tripNameInput.val());
+    // console.log(tripNameInput.val());
     const alert =
       $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -67,7 +70,7 @@ function handleSubmit(e) {
     alert.appendTo(alertDiv);
     $("#alertClose").on("click", function () {
       alertDiv.html("");
-      console.log("tried to close");
+   
     });
     return;
   }
@@ -78,15 +81,16 @@ function handleSubmit(e) {
     city: cityInput.val(),
     id: Math.floor(Math.random() * 1000).toString(),
     places: [],
+    coords: {},
   };
 
   trips.push(newTrip);
   saveLocalStorage("trips", trips);
   saveLocalStorage("currentTrip", tripNameInput.val());
   saveLocalStorage("currentCity", cityInput.val());
+  saveLocalStorage('currentTripId', newTrip.id)
   getGeoId(cityInput.val(), true);
-  console.log(tripNameInput.val());
-  $("#tripModal").hideModal();
+  document.getElementById('newTripModal').close()
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -105,13 +109,22 @@ function getGeoId(place, initial) {
         getCityInfo(id); //this returns the internal ID for the given city from the Geoapify api
       }
       // console.log(initial)
+      const trips = getLocalStorage('trips')
+
+      for (const trip of trips) {
+        if (trip.id === getLocalStorage("currentTripId")){
+          trip.coords = {lat:data.features[0].properties.lat, lon: data.features[0].properties.lon }
+        }
+      }
+      saveLocalStorage('trips', trips)
     });
 }
 
 function getCityInfo(id) {
   //fetch information from Geoapify
+  const limit = getCategories(true) * 20
   fetch(
-    `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`
+    `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=${limit}&apiKey=${geoKey}`
   )
     .then(function (response) {
       return response.json();
@@ -144,9 +157,37 @@ function renderPlacesToList(places) {
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(restaurantList);
-    // console.log(places)
-    // newMarker(location, 'catering', places.lat, places.lon)
+    newMarker(location, 'catering', places.lat, places.lon, markercount)
   } else if (categories.includes("accommodations")) {
+    favBtn.text(`${markercount}. ${name}`);
+    favBtn.appendTo(newListItem);
+    favBtn.attr("data-address", places.address_line2);
+    newListItem.appendTo(hotelList);
+    newMarker(location, 'accommidation', places.lat, places.lon, markercount)
+  } else if (categories.includes("airport")){
+    favBtn.text(`${markercount}. ${name}`);
+    favBtn.appendTo(newListItem);
+    favBtn.attr("data-address", places.address_line2);
+    newListItem.appendTo(airportList);
+    newMarker(location, 'airport', places.lat, places.lon, markercount)
+  }else if (categories.includes("healthcare")){
+    favBtn.text(`${markercount}. ${name}`);
+    favBtn.appendTo(newListItem);
+    favBtn.attr("data-address", places.address_line2);
+    newListItem.appendTo(healthcareList);
+    newMarker(location, 'healthcare', places.lat, places.lon, markercount)
+  }else if (categories.includes("entertainment")){
+    favBtn.text(`${markercount}. ${name}`);
+    favBtn.appendTo(newListItem);
+    favBtn.attr("data-address", places.address_line2);
+    newListItem.appendTo(entertainmentList);
+    newMarker(location, 'entertainment', places.lat, places.lon, markercount)
+  }else if (categories.includes("commercial.clothing")){
+    favBtn.text(`${markercount}. ${name}`);
+    favBtn.appendTo(newListItem);
+    favBtn.attr("data-address", places.address_line2);
+    newListItem.appendTo(clothingList);
+    newMarker(location, 'commercial', places.lat, places.lon, markercount)
   }
 
   markercount++;
@@ -169,7 +210,7 @@ async function initMap(lat, lon) {
   mapEl.css("border-radius", "100px");
 }
 
-async function newMarker(location, type = "feature", lat, lon) {
+async function newMarker(location, type = "feature", lat, lon, mark) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
   const { PinElement } = await google.maps.importLibrary("marker");
@@ -179,42 +220,47 @@ async function newMarker(location, type = "feature", lat, lon) {
     feature: {
       background: "red",
       borderColor: "black",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "white",
     },
-
+    commercial: {
+      background: "red",
+      borderColor: "black",
+      glyph: `${mark}`,
+      glyphColor: "white",
+    },
     catering: {
       background: "blue",
       borderColor: "white",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "white",
     },
 
     healthcare: {
       background: "green",
       borderColor: "black",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "white",
     },
 
     airport: {
       background: "pink",
       borderColor: "black",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "white",
     },
 
     entertainment: {
       background: "purple",
       borderColor: "black",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "white",
     },
 
     accommodation: {
       background: "white",
       borderColor: "black",
-      glyph: `${markercount}`,
+      glyph: `${mark}`,
       glyphColor: "black",
     },
   };
@@ -231,52 +277,88 @@ async function newMarker(location, type = "feature", lat, lon) {
 
 function addFavoriteToLocalStorage(favorite, name) {
   const address = favorite.dataset.address;
-  console.log(address);
+  // console.log(address);
   const trips = getLocalStorage("trips");
-  console.log(trips);
+  // console.log(trips);
   for (const trip of trips) {
-    if (trip.trip === getLocalStorage("currentTrip")) {
-      console.log(getLocalStorage("trips"));
+    if (trip.id === getLocalStorage("currentTripId")) {
+      
       trip.places.push({ name, address });
     }
   }
   saveLocalStorage("trips", trips);
 }
 
-const btn = document.getElementById("filterBtn");
+function removeFavoritesFromLocalStorage(favorite, name) {
+  const address = favorite.dataset.address;
+  // console.log(address);
+  const trips = getLocalStorage("trips");
+
+  // console.log(trips);
+  
+  for (const trip of trips) {
+    const placesArray = [];
+    if (trip.id === getLocalStorage("currentTripId")) {
+      for (let i =0; i < trip.places.length; i++){
+        if (trip.places[i].address == address){
+
+          console.log(trip.places[i], trip.places[i].name)
+          
+        }else{
+          placesArray.push({name: trip.places[i].name, address: trip.places[i].address})
+        }
+        
+      }
+      trip.places = placesArray
+  }
+ 
+
+  saveLocalStorage("trips", trips);
+  console.log(getLocalStorage("trips"));
+}
+}
+
+
+
 
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
   getGeoId(getLocalStorage("currentCity"));
 });
-let favListPair;
-const nameList = [];
+
+
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1];
   const targetBtn = $(e.target);
-  console.log(e.target);
-  addFavoriteToLocalStorage(e.target, name);
+  // console.log(e)
+  if (e.target.className === 'bg-favorite'){
+    removeFavoritesFromLocalStorage(e.target, name)
+  }else{
+    addFavoriteToLocalStorage(e.target, name);
+  }
+  
   targetBtn.toggleClass("bg-favorite");
 });
+
+
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
 
 
 themeButton.on('click', function(){
-  console.log(html[0].dataset.theme)
+  // console.log(html[0].dataset.theme)
   if (html[0].dataset.theme === 'light') {
     html[0].dataset.theme = 'retro'
-  
-} else if (html[0].dataset.theme === 'retro'){
+} else if(html[0].dataset.theme === 'retro'){
   html[0].dataset.theme = 'halloween'
 } else if(html[0].dataset.theme === 'halloween'){
   html[0].dataset.theme = 'dark'
 } else if (html[0].dataset.theme === 'dark'){
   html[0].dataset.theme = 'light'
-} else {
-  html[0].dataset.theme = 'light'
+}else{
+    html[0].dataset.theme = 'light'
 }
 
 saveLocalStorage('theme', html[0].dataset.theme)
