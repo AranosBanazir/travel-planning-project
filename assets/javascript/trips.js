@@ -39,11 +39,11 @@ function renderTrips() {
     //   </div>`;
 
     const tripCard = $(`
-<div class="collapse collapse-arrow bg-base-200 mt-2 mb-2">
+<div class="collapse collapse-arrow bg-base-200 mt-2 mb-2" id="trip-${trip.id}">
 
 <input type="radio" name="my-accordion-2" />
 
-<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate} <div class="btn btn-error" data-id="${trip.id}" id="tripDelButton">Delete Trip</div></div>
+<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate} </div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
         <div style='background-color: transparent;' class="grid flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
@@ -55,7 +55,9 @@ function renderTrips() {
         </div> 
          <div id='placeCardDiv-${trip.id}' class="flex flex-wrap gap-[3%]">
             
-            </div>`);
+            </div>
+            <button class="btn btn-error" data-id="${trip.id}" id="tripDelButton-${trip.id}">Delete Trip</button>
+`);
 
     for (let i = 0; i < trip.places.length; i++) {
       getFavPlaceInfo(trip.places[i].address, trip.id);
@@ -76,7 +78,7 @@ function getFavPlaceInfo(place, id) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "576ec6d674mshbcba8edd5142f37p131159jsn7f3f59491acb",
+      "X-RapidAPI-Key": "a663ecdd14mshab2c56faf4558fbp11c070jsnfae22d1e62b6",
       "X-RapidAPI-Host": "local-business-data.p.rapidapi.com",
     },
   };
@@ -111,7 +113,9 @@ function getFavPlaceInfo(place, id) {
             </div>
       </div>
       `);
+
       placeCard.appendTo(placeCardDiv);
+
       newMarker(id, place.name, place.latitude, place.longitude);
     });
 }
@@ -151,8 +155,22 @@ testButton.on("click", () => {
 testRender.on("click", () => {
   renderTrips();
 });
-deleteButton.on("click", () => {
-  console.log("delete button clicked");
+$(document).on("click", "button", (e) => {
+  // console.log(e);
+  const name = e.currentTarget.id.split("-");
+  // console.log(name[0]);
+  const tempArray = [];
+  const trips = getLocalStorage("trips");
+  let trip;
+  trip = $(`#trip-${name[1]}`);
+  trip.remove();
+  for (const trip of trips) {
+    if (trip.id == name[1]) {
+    } else {
+      tempArray.push(trip);
+    }
+  }
+  saveLocalStorage("trips", tempArray);
 });
 backButton.on("click", function () {
   //return to landing page
