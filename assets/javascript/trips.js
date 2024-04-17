@@ -46,14 +46,14 @@ function renderTrips() {
 <div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate} </div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
-        <div style='background-color: transparent;' class="grid flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
+        <div style='background-color: transparent;' class="grid self-center flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
             <div id="map-${trip.id}" class="w-[100%] h-[100%] row-span-full">
                 
             </div>
         </div> 
         <div class="divider lg:divider-horizontal">
         </div> 
-         <div id='placeCardDiv-${trip.id}' class="flex flex-wrap gap-[3%]">
+         <div id='placeCardDiv-${trip.id}' class="flex justify-center flex-wrap gap-[3%]">
             
             </div>
             <button class="btn btn-error" data-id="${trip.id}" id="tripDelButton-${trip.id}">Delete Trip</button>
@@ -92,24 +92,33 @@ function getFavPlaceInfo(place, id) {
         return;
       }
 
+<<<<<<< HEAD
+      const place = data.data[0].directory[0]
+      console.log(place)
+      const placeCardDiv = $(`#placeCardDiv-${id}`)
+      let priceRange = '<p></p>'
+=======
       const place = data.data[0].directory[0];
       console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
       let priceRange = "";
+>>>>>>> f024f05203b7939b8cfc6c3dbbd0e7072f77430f
 
       if (place.price_range) {
         priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`;
       }
 
       const placeCard = $(`
-      <div>
-          <div class="card bg-base-100 shadow-xl w-[400px] h-[400px]">
-              <div class="card-body">
+      <div class="flex flex-wrap">
+          <div class="card bg-base-100 shadow-xl mb-[10px] w-[370px] text-wrap">
+              <div class="card-body">  
                   <h2 class="card-title">${place.name}</h2>
                    <p class = 'break-words'>Adress: ${place.address}</p>
                    <p class = 'break-words'>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
-                   ${priceRange}
+                   ${priceRange}   
+                   <button class="btn w-[78px] h-[48px] justify-self-end self-end btn-error" id="deleteCard">Delete</button> 
               </div>
+              
             </div>
       </div>
       `);
