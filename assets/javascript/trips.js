@@ -1,7 +1,7 @@
 //This will be to render the saved information from LS
 //so that we can view previously scheduled trips by name, as well as the saved places of interest
-const html = $('html')
-const themeButton = $('#themeButton')
+const html = $("html");
+const themeButton = $("#themeButton");
 const backButton = $("#backButton");
 const tripList = $("#tripsList");
 const deleteButton = $(".deleteTrip");
@@ -18,7 +18,7 @@ function getLocalStorage(key) {
 
 //a function to save LS data
 function saveLocalStorage(key, item) {
-  localStorage.setItem(key,JSON.stringify(item));
+  localStorage.setItem(key, JSON.stringify(item));
 }
 
 //Make a function to render LS info to Page
@@ -27,22 +27,23 @@ function renderTrips() {
   const trips = getLocalStorage("trips");
   tripList.empty();
   trips.forEach((trip) => {
-//     const tripCard = `
-//     <div class="collapse collapse-arrow bg-base-200">
-//     <input type="radio" name="my-accordion-2" checked="checked" />
-//     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
-//     <div class="collapse-content">
-//     <div id="map-${trip.id}" class="row-span-full">
-//     <img src="https://placehold.co/600x400">
-//     </div>
-//     </div>
-//   </div>`;
+    //     const tripCard = `
+    //     <div class="collapse collapse-arrow bg-base-200">
+    //     <input type="radio" name="my-accordion-2" checked="checked" />
+    //     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
+    //     <div class="collapse-content">
+    //     <div id="map-${trip.id}" class="row-span-full">
+    //     <img src="https://placehold.co/600x400">
+    //     </div>
+    //     </div>
+    //   </div>`;
 
-
-const tripCard = $(`
+    const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2">
+
 <input type="radio" name="my-accordion-2" />
-<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate}</div>
+
+<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate} <div class="btn btn-error" data-id="${trip.id}" id="tripDelButton">Delete Trip</div></div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
         <div style='background-color: transparent;' class="grid flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
@@ -54,20 +55,16 @@ const tripCard = $(`
         </div> 
          <div id='placeCardDiv-${trip.id}' class="flex flex-wrap gap-[3%]">
             
-            </div>`)
+            </div>`);
 
-    
-    for (let i = 0; i < trip.places.length; i++){
-      getFavPlaceInfo(trip.places[i].address, trip.id)
-      
+    for (let i = 0; i < trip.places.length; i++) {
+      getFavPlaceInfo(trip.places[i].address, trip.id);
     }
 
     tripList.append(tripCard);
 
-
     //need to init map based on tripid
-    initMap(trip.coords.lat, trip.coords.lon, trip.id)
-
+    initMap(trip.coords.lat, trip.coords.lon, trip.id);
   });
 }
 
@@ -89,20 +86,18 @@ function getFavPlaceInfo(place, id) {
       return response.json();
     })
     .then(function (data) {
-      if (!data.data[0].directory){
-        return
+      if (!data.data[0].directory) {
+        return;
       }
 
-      const place = data.data[0].directory[0]
-      console.log(place)
-      const placeCardDiv = $(`#placeCardDiv-${id}`)
-      let priceRange = ''
+      const place = data.data[0].directory[0];
+      console.log(place);
+      const placeCardDiv = $(`#placeCardDiv-${id}`);
+      let priceRange = "";
 
-      if (place.price_range){
-        priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`
+      if (place.price_range) {
+        priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`;
       }
-
-
 
       const placeCard = $(`
       <div>
@@ -115,15 +110,13 @@ function getFavPlaceInfo(place, id) {
               </div>
             </div>
       </div>
-      `) 
-      placeCard.appendTo(placeCardDiv)
-      newMarker(id, place.name, place.latitude, place.longitude)
+      `);
+      placeCard.appendTo(placeCardDiv);
+      newMarker(id, place.name, place.latitude, place.longitude);
     });
-  
 }
 
-
-const maps = []
+const maps = [];
 async function initMap(lat, lon, id) {
   const mapEl = $(`#map-${id}`);
   const position = { lat: lat, lng: lon };
@@ -137,29 +130,19 @@ async function initMap(lat, lon, id) {
   });
 
   mapEl.css("border-radius", "100px");
-  mapEl.css('z-index', '1')
+  mapEl.css("z-index", "1");
 }
-
 
 async function newMarker(id, name, lat, lon) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
- 
 
   const marker = new AdvancedMarkerElement({
-    map: maps[id], 
+    map: maps[id],
     position: position,
     title: `${name}`,
   });
 }
-
-
-
-
-
-
-
-
 
 // TODO remove the dependency on clicking the button to render
 testButton.on("click", () => {
@@ -176,27 +159,26 @@ backButton.on("click", function () {
   window.location.href = "./index.html";
 });
 
-themeButton.on('click', function(){
-  console.log(html[0].dataset.theme)
-  if (html[0].dataset.theme === 'light') {
-    html[0].dataset.theme = 'retro'
-  
-} else if (html[0].dataset.theme === 'retro'){
-  html[0].dataset.theme = 'halloween'
-} else if(html[0].dataset.theme === 'halloween'){
-  html[0].dataset.theme = 'dark'
-} else if (html[0].dataset.theme === 'dark'){
-  html[0].dataset.theme = 'light'
-}else{
-    html[0].dataset.theme = 'light'
-}
-
-saveLocalStorage('theme', html[0].dataset.theme)
-})
-
-$(document).ready(function (){
-  html[0].dataset.theme = getLocalStorage('theme') || 'light'
-  if (!getLocalStorage('trips')){
-    location.href = './index.html'
+themeButton.on("click", function () {
+  console.log(html[0].dataset.theme);
+  if (html[0].dataset.theme === "light") {
+    html[0].dataset.theme = "retro";
+  } else if (html[0].dataset.theme === "retro") {
+    html[0].dataset.theme = "halloween";
+  } else if (html[0].dataset.theme === "halloween") {
+    html[0].dataset.theme = "dark";
+  } else if (html[0].dataset.theme === "dark") {
+    html[0].dataset.theme = "light";
+  } else {
+    html[0].dataset.theme = "light";
   }
-})
+
+  saveLocalStorage("theme", html[0].dataset.theme);
+});
+
+$(document).ready(function () {
+  html[0].dataset.theme = getLocalStorage("theme") || "light";
+  if (!getLocalStorage("trips")) {
+    location.href = "./index.html";
+  }
+});
