@@ -149,9 +149,9 @@ function getGeoId(place, initial) {
 
 function getCityInfo(id) {
   //fetch information from Geoapify
-  const limit = getCategories(true) * 20;
+  // const limit = getCategories(true) * 20;
   fetch(
-    `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=${limit}&apiKey=${geoKey}`
+    `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`
   )
     .then(function (response) {
       return response.json();
