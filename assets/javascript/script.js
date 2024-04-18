@@ -70,6 +70,7 @@ function clearLists() {
 function handleSubmit(e) {
   e.preventDefault();
   clearLists();
+
   const trips = getLocalStorage("trips");
   if (
     !tripNameInput.val() ||
@@ -116,6 +117,11 @@ function handleSubmit(e) {
   saveLocalStorage("currentTripId", newTrip.id);
   getGeoId(cityInput.val(), true);
   document.getElementById("newTripModal").close();
+  tripNameInput.val('')
+  tripStartDate.val('')
+  tripEndDate.val('')
+  cityInput.val('')
+
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -181,37 +187,39 @@ function renderPlacesToList(places) {
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(restaurantList);
-    newMarker(location, "catering", places.lat, places.lon, markercount);
-  } else if (categories.includes("accommodations")) {
+    newMarker(name, "catering", places.lat, places.lon, markercount);
+  } else if (categories.includes("accommodation")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(hotelList);
-    newMarker(location, "accommidation", places.lat, places.lon, markercount);
+    newMarker(name, "accommodation", places.lat, places.lon, markercount);
   } else if (categories.includes("airport")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(airportList);
-    newMarker(location, "airport", places.lat, places.lon, markercount);
+    newMarker(name, "airport", places.lat, places.lon, markercount);
   } else if (categories.includes("healthcare")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(healthcareList);
-    newMarker(location, "healthcare", places.lat, places.lon, markercount);
+    newMarker(name, "healthcare", places.lat, places.lon, markercount);
   } else if (categories.includes("entertainment")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(entertainmentList);
-    newMarker(location, "entertainment", places.lat, places.lon, markercount);
+    newMarker(name, "entertainment", places.lat, places.lon, markercount);
   } else if (categories.includes("commercial.clothing")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(clothingList);
-    newMarker(location, "commercial", places.lat, places.lon, markercount);
+    newMarker(name, "commercial", places.lat, places.lon, markercount);
+  }else{
+    console.log(places)
   }
 
   markercount++;
@@ -234,7 +242,7 @@ async function initMap(lat, lon) {
   mapEl.css("border-radius", "100px");
 }
 
-async function newMarker(location, type = "feature", lat, lon, mark) {
+async function newMarker(where, type, lat, lon, mark) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
   const { PinElement } = await google.maps.importLibrary("marker");
@@ -294,7 +302,7 @@ async function newMarker(location, type = "feature", lat, lon, mark) {
   const marker = new AdvancedMarkerElement({
     map: map, //using the globally set map var
     position: position,
-    title: `${location}`,
+    title: `${where}`,
     content: pin.element,
   });
 }
@@ -341,7 +349,6 @@ function removeFavoritesFromLocalStorage(favorite) {
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
-  const currentStorage = getLocalStorage("trips");
   const errorMessage =
     $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -357,8 +364,8 @@ filter.on("click", function () {
       </svg>
     </button>
 </div>`);
-  // console.log(currentStorage);
-  if (currentStorage.length !== 0) {
+  if (getLocalStorage('currentCity').length > 0){
+    console.log(getLocalStorage('currentCity'))
     clearLists();
     getGeoId(getLocalStorage("currentCity"));
   } else {

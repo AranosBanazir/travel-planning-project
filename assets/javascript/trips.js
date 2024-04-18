@@ -38,12 +38,15 @@ function renderTrips() {
     //     </div>
     //   </div>`;
 
+    const formatedStartDate = new Date(trip.startDate).toLocaleDateString()
+    const formatedEndDate = new Date(trip.tripEndDate).toLocaleDateString()
+
     const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2" id="trip-${trip.id}">
 
 <input type="radio" name="my-accordion-2" />
 
-<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${trip.startDate} To: ${trip.tripEndDate} </div>
+<div class="collapse-title text-xl text-center font-medium">${trip.trip}        ${trip.city} From: ${formatedStartDate} To: ${formatedEndDate} </div>
 <div class="collapse-content">
     <div class="flex flex-col w-full lg:flex-row">
         <div style='background-color: transparent;' class="grid self-center flex-grow w-[600px] h-[400px] lg:max-w-[30%] max-h-fit card bg-base-300 rounded-box place-items-center">
@@ -76,7 +79,7 @@ function getFavPlaceInfo(place, id) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "a663ecdd14mshab2c56faf4558fbp11c070jsnfae22d1e62b6",
+      "X-RapidAPI-Key": "a1a6f39749msha4cefe337e2c0e4p1399cbjsn35c3b62321e4",
       "X-RapidAPI-Host": "local-business-data.p.rapidapi.com",
     },
   };
@@ -187,6 +190,12 @@ $(document).on("click", "button", (e) => {
     }
   }
   saveLocalStorage("trips", tempArray);
+  if (getLocalStorage("trips").length === 0) {
+    location.href = "./index.html";
+    localStorage.removeItem('currentCity')
+    localStorage.removeItem('currentTrip')
+    localStorage.removeItem('currentTripId')
+  }
 });
 backButton.on("click", function () {
   //return to landing page
