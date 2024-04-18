@@ -79,6 +79,7 @@ function getFavPlaceInfo(place, id) {
   const options = {
     method: "GET",
     headers: {
+
       "X-RapidAPI-Key": "a1a6f39749msha4cefe337e2c0e4p1399cbjsn35c3b62321e4",
       "X-RapidAPI-Host": "local-business-data.p.rapidapi.com",
     },
