@@ -87,7 +87,6 @@ function getFavPlaceInfo(place, id) {
     })
     .then(function (data) {
       if (!data.data[0].directory) {
-        throw new Error("nil value");
         return;
       }
 
@@ -149,18 +148,6 @@ async function newMarker(id, name, lat, lon) {
   });
 }
 
-// TODO remove the dependency on clicking the button to render
-testButton.on("click", () => {
-  getTrips();
-});
-testRender.on("click", () => {
-  renderTrips();
-});
-// name 1 is ID,
-// second for loop checking for const trip of trips, trip.places, push everything but name[1](address)
-/*
-
-*/
 $(document).on("click", "button", (e) => {
   console.log(e);
   const name = e.currentTarget.id.split("-");
@@ -224,6 +211,7 @@ themeButton.on("click", function () {
 });
 
 $(document).ready(function () {
+  setTimeout(renderTrips, 500);
   html[0].dataset.theme = getLocalStorage("theme") || "light";
   if (getLocalStorage("trips").length === 0) {
     location.href = "./index.html";
