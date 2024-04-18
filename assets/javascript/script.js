@@ -16,8 +16,9 @@ const restaurantList = $("#restaurantList");
 const airportList = $("#airportList");
 const hotelList = $("#hotelList");
 const clothingList = $("#clothingList");
-const healthcareList = $("#healthcareList")
-const entertainmentList = $("#entertainmentList")
+const healthcareList = $("#healthcareList");
+const entertainmentList = $("#entertainmentList");
+const footerEl = $("#filterAlertDiv");
 
 let cityInfo = [];
 
@@ -58,8 +59,8 @@ function clearLists() {
   ];
   for (const list of lists) {
     const listAccordion = $(`#${list}List`);
-    console.log(list);
-    console.log(listAccordion);
+    // console.log(list);
+    // console.log(listAccordion);
     listAccordion.empty();
   }
   markercount = 1;
@@ -340,12 +341,36 @@ function removeFavoritesFromLocalStorage(favorite) {
 //event listeners
 modalForm.on("submit", handleSubmit);
 filter.on("click", function () {
-  clearLists();
-  getGeoId(getLocalStorage("currentCity"));
+  const currentStorage = getLocalStorage("trips");
+  const errorMessage =
+    $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
+    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+    </svg>
+    <div class="ms-3 text-sm font-medium">
+      <p>Please create a trip before applying filters</p>
+    </div>
+    <button type="button" id="alertClose" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
+      <span class="sr-only">Dismiss</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+    </button>
+</div>`);
+  // console.log(currentStorage);
+  if (currentStorage.length !== 0) {
+    clearLists();
+    getGeoId(getLocalStorage("currentCity"));
+  } else {
+    errorMessage.appendTo(footerEl);
+    $("#alertClose").on("click", () => {
+      footerEl.html("");
+    });
+  }
 });
 
 accordianDiv.on("click", "button", function (e) {
-  const name = e.target.innerText.split(".")[1];
+  const name = e.target.innerText.split(".")[1].trim();
   const targetBtn = $(e.target);
   // console.log(e)
   if (e.target.className === "bg-favorite") {
