@@ -198,7 +198,7 @@ themeButton.on("click", function () {
 
 $(document).ready(function () {
   html[0].dataset.theme = getLocalStorage("theme") || "light";
-  if (!getLocalStorage("trips")) {
+  if (getLocalStorage("trips").length === 0) {
     location.href = "./index.html";
   }
 });
