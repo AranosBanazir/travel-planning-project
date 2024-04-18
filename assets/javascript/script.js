@@ -36,7 +36,7 @@ function saveLocalStorage(key, item) {
 }
 
 function getCategories(num) {
-  const options = $("nav input:checked");
+  const options = $(".menu input:checked");
   const categories = [];
   for (let i = 0; i < options.length; i++) {
     categories.push(options[i].dataset.categories);
