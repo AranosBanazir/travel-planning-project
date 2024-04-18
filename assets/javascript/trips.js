@@ -22,22 +22,10 @@ function saveLocalStorage(key, item) {
 }
 
 //Make a function to render LS info to Page
-// TODO remove the console.logs and remove dependency on clicking the button to render
 function renderTrips() {
   const trips = getLocalStorage("trips");
   tripList.empty();
   trips.forEach((trip) => {
-    //     const tripCard = `
-    //     <div class="collapse collapse-arrow bg-base-200">
-    //     <input type="radio" name="my-accordion-2" checked="checked" />
-    //     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
-    //     <div class="collapse-content">
-    //     <div id="map-${trip.id}" class="row-span-full">
-    //     <img src="https://placehold.co/600x400">
-    //     </div>
-    //     </div>
-    //   </div>`;
-
     const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2" id="trip-${trip.id}">
 
@@ -149,18 +137,6 @@ async function newMarker(id, name, lat, lon) {
   });
 }
 
-// TODO remove the dependency on clicking the button to render
-testButton.on("click", () => {
-  getTrips();
-});
-testRender.on("click", () => {
-  renderTrips();
-});
-// name 1 is ID,
-// second for loop checking for const trip of trips, trip.places, push everything but name[1](address)
-/*
-
-*/
 $(document).on("click", "button", (e) => {
   console.log(e);
   const name = e.currentTarget.id.split("-");
@@ -225,6 +201,8 @@ themeButton.on("click", function () {
 
 $(document).ready(function () {
   html[0].dataset.theme = getLocalStorage("theme") || "light";
+  renderTrips();
+
   if (getLocalStorage("trips").length === 0) {
     location.href = "./index.html";
   }
