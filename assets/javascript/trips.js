@@ -6,38 +6,21 @@ const backButton = $("#backButton");
 const tripList = $("#tripsList");
 const deleteButton = $(".deleteTrip");
 
-// using this to test retrieving data from LS
-const testButton = $("#testButton");
-const testRender = $("#testRender");
-const testTripsList = $("#tripsList");
-
 //a function to pull info from LS
 function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key)) || []; //this will return th12345e JSON Object in LocalStorage
 }
-
+a;
 //a function to save LS data
 function saveLocalStorage(key, item) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-//Make a function to render LS info to Page
-// TODO remove the console.logs and remove dependency on clicking the button to render
+//Make a function to render LS info to Pagev
 function renderTrips() {
   const trips = getLocalStorage("trips");
   tripList.empty();
   trips.forEach((trip) => {
-    //     const tripCard = `
-    //     <div class="collapse collapse-arrow bg-base-200">
-    //     <input type="radio" name="my-accordion-2" checked="checked" />
-    //     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
-    //     <div class="collapse-content">
-    //     <div id="map-${trip.id}" class="row-span-full">
-    //     <img src="https://placehold.co/600x400">
-    //     </div>
-    //     </div>
-    //   </div>`;
-
     const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2" id="trip-${trip.id}">
 
