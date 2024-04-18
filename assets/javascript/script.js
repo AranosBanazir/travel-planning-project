@@ -34,7 +34,7 @@ function getLocalStorage(key) {
 function saveLocalStorage(key, item) {
   localStorage.setItem(key, JSON.stringify(item));
 }
-
+// function to get categories from the HTML inputs
 function getCategories(num) {
   const options = $(".menu input:checked");
   const categories = [];
@@ -47,7 +47,7 @@ function getCategories(num) {
   }
   return categories.toString();
 }
-
+// function to clear list of locations in the accordion
 function clearLists() {
   const lists = [
     "restaurant",
@@ -59,8 +59,6 @@ function clearLists() {
   ];
   for (const list of lists) {
     const listAccordion = $(`#${list}List`);
-    // console.log(list);
-    // console.log(listAccordion);
     listAccordion.empty();
   }
   markercount = 1;
@@ -72,13 +70,13 @@ function handleSubmit(e) {
   clearLists();
 
   const trips = getLocalStorage("trips");
+  // if there is no information in the modal present an error alert
   if (
     !tripNameInput.val() ||
     !tripStartDate.val() ||
     !tripEndDate.val() ||
     !cityInput.val()
   ) {
-    // console.log(tripNameInput.val());
     const alert =
       $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -100,6 +98,7 @@ function handleSubmit(e) {
     });
     return;
   }
+  // creates the new trip object
   const newTrip = {
     trip: tripNameInput.val(),
     startDate: tripStartDate.val(),
@@ -109,7 +108,7 @@ function handleSubmit(e) {
     places: [],
     coords: {},
   };
-
+  // sets local storge with all the information, resets the modal form
   trips.push(newTrip);
   saveLocalStorage("trips", trips);
   saveLocalStorage("currentTrip", tripNameInput.val());
@@ -117,11 +116,10 @@ function handleSubmit(e) {
   saveLocalStorage("currentTripId", newTrip.id);
   getGeoId(cityInput.val(), true);
   document.getElementById("newTripModal").close();
-  tripNameInput.val('')
-  tripStartDate.val('')
-  tripEndDate.val('')
-  cityInput.val('')
-
+  tripNameInput.val("");
+  tripStartDate.val("");
+  tripEndDate.val("");
+  cityInput.val("");
 }
 
 //function to get geoid: use https://api.geoapify.com/v1/geocode
@@ -139,9 +137,8 @@ function getGeoId(place, initial) {
       if (!initial) {
         getCityInfo(id); //this returns the internal ID for the given city from the Geoapify api
       }
-      // console.log(initial)
       const trips = getLocalStorage("trips");
-
+      // gather coordinates of location
       for (const trip of trips) {
         if (trip.id === getLocalStorage("currentTripId")) {
           trip.coords = {
@@ -154,9 +151,9 @@ function getGeoId(place, initial) {
     });
 }
 
+// function that gathers the information of the city
 function getCityInfo(id) {
   //fetch information from Geoapify
-  // const limit = getCategories(true) * 20;
   fetch(
     `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`
   )
@@ -171,6 +168,8 @@ function getCityInfo(id) {
     });
 }
 let markercount = 1;
+
+// renders names of selectable locations into the accordion as buttons for the user to select
 function renderPlacesToList(places) {
   const categories = places.categories;
   const favBtn = $(`<button>`);
@@ -180,8 +179,6 @@ function renderPlacesToList(places) {
   if (!name) {
     name = places.address_line1;
   }
-
-  //TODO Check why names are undefined in the optional statement
   if (categories.includes("catering")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);
@@ -218,8 +215,7 @@ function renderPlacesToList(places) {
     favBtn.attr("data-address", places.address_line2);
     newListItem.appendTo(clothingList);
     newMarker(name, "commercial", places.lat, places.lon, markercount);
-  }else{
-    console.log(places)
+  } else {
   }
 
   markercount++;
@@ -242,6 +238,7 @@ async function initMap(lat, lon) {
   mapEl.css("border-radius", "100px");
 }
 
+// function for generating the markers on the map
 async function newMarker(where, type, lat, lon, mark) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -307,11 +304,10 @@ async function newMarker(where, type, lat, lon, mark) {
   });
 }
 
+// function for adding selected favorite places to the object in local storage
 function addFavoriteToLocalStorage(favorite, name) {
   const address = favorite.dataset.address;
-  // console.log(address);
   const trips = getLocalStorage("trips");
-  // console.log(trips);
   for (const trip of trips) {
     if (trip.id === getLocalStorage("currentTripId")) {
       trip.places.push({ name, address });
@@ -319,13 +315,10 @@ function addFavoriteToLocalStorage(favorite, name) {
   }
   saveLocalStorage("trips", trips);
 }
-
+// removes favorite location from object in local storage
 function removeFavoritesFromLocalStorage(favorite) {
   const address = favorite.dataset.address;
-  // console.log(address);
   const trips = getLocalStorage("trips");
-
-  // console.log(trips);
 
   for (const trip of trips) {
     const placesArray = [];
@@ -364,8 +357,8 @@ filter.on("click", function () {
       </svg>
     </button>
 </div>`);
-  if (getLocalStorage('currentCity').length > 0){
-    console.log(getLocalStorage('currentCity'))
+  // checks to make sure that there is a trip in local storage on applying filters, otherwise prompts with dismissable alert
+  if (getLocalStorage("currentCity").length > 0) {
     clearLists();
     getGeoId(getLocalStorage("currentCity"));
   } else {
@@ -375,11 +368,10 @@ filter.on("click", function () {
     });
   }
 });
-
+// event listener for accordion
 accordianDiv.on("click", "button", function (e) {
   const name = e.target.innerText.split(".")[1].trim();
   const targetBtn = $(e.target);
-  // console.log(e)
   if (e.target.className === "bg-favorite") {
     removeFavoritesFromLocalStorage(e.target);
   } else {
@@ -388,13 +380,12 @@ accordianDiv.on("click", "button", function (e) {
 
   targetBtn.toggleClass("bg-favorite");
 });
-
+// event listener for favorite trips, moves user to trips.html
 favTripsBtn.on("click", function () {
   window.location.href = "./trips.html";
 });
-
+// theme toggler
 themeButton.on("click", function () {
-  // console.log(html[0].dataset.theme)
   if (html[0].dataset.theme === "light") {
     html[0].dataset.theme = "retro";
   } else if (html[0].dataset.theme === "retro") {
@@ -409,7 +400,7 @@ themeButton.on("click", function () {
 
   saveLocalStorage("theme", html[0].dataset.theme);
 });
-
+// load on ready
 $(document).ready(function () {
   html[0].dataset.theme = getLocalStorage("theme") || "light";
 });
