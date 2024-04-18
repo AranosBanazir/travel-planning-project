@@ -370,7 +370,7 @@ filter.on("click", function () {
 });
 
 accordianDiv.on("click", "button", function (e) {
-  const name = e.target.innerText.split(".")[1];
+  const name = e.target.innerText.split(".")[1].trim();
   const targetBtn = $(e.target);
   // console.log(e)
   if (e.target.className === "bg-favorite") {

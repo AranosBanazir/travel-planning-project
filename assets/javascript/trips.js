@@ -94,28 +94,21 @@ function getFavPlaceInfo(place, id) {
       const place = data.data[0].directory[0];
       console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
-      let priceRange = "";
+      let priceRange = "<p></p>";
 
       if (place.price_range) {
         priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`;
       }
 
       const placeCard = $(`
-      <div class="flex flex-wrap placeCard" id="placecard-${place.address.replace(
-        /\s/g,
-        "%"
-      )}">
+      <div class="flex flex-wrap placeCard" id="placecard-${place.name}">
           <div class="card bg-base-100 shadow-xl mb-[10px] w-[370px] text-wrap">
               <div class="card-body">  
                   <h2 class="card-title">${place.name}</h2>
                    <p class = 'break-words'>Adress: ${place.address}</p>
-                   <p class = 'break-words'>Rating: ${place.rating} ⭐️ (${
-        place.review_count
-      } reviews)
+                   <p class = 'break-words'>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
                    ${priceRange}   
-                   <button class="btn w-[78px] h-[48px] justify-self-end self-end btn-error" id="deleteCard-${
-                     place.address
-                   }">Delete</button> 
+                   <button class="btn w-[78px] h-[48px] justify-self-end self-end btn-error" id="deleteCard-${place.name}">Delete</button> 
               </div>
               
             </div>
@@ -183,21 +176,22 @@ $(document).on("click", "button", (e) => {
   let card = $(e.currentTarget).closest(".placeCard");
   console.log(card);
   card.remove();
-  // for (const place of places) {
-  //   const placesArray = [];
-  //   if () {
-  //     for (let i = 0; i < trip.places.length; i++) {
-  //       if (trip.places[i].address == name[1].replace(/%/g, " ")) {
-  //       } else {
-  //         placesArray.push({
-  //           name: trip.places[i].name,
-  //           address: trip.places[i].address,
-  //         });
-  //       }
-  //     }
-  //     trip.places = placesArray;
-  //   }
-  // }
+  for (const trip of trips) {
+    const placesArray = [];
+    for (let i = 0; i < trip.places.length; i++) {
+      console.log(trip.places[i].name, "||", name[1]);
+      if (trip.places[i].name == name[1]) {
+        console.log("inside if statement");
+      } else {
+        console.log("inside else statement");
+        placesArray.push({
+          name: trip.places[i].name,
+          address: trip.places[i].address,
+        });
+      }
+    }
+    trip.places = placesArray;
+  }
 
   for (const trip of trips) {
     if (trip.id == name[1]) {
