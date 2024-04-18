@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html class="h-full" lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,12 +17,12 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <title>Travel Planning Project</title>
   </head>
-  <body>
+  <body class="h-[100%]">
     <!-- CS: Added 20 margin to nav -->
-    <nav class="mb-20"> 
+    <nav class=""> 
       <div class="navbar bg-base-100">
         <div class="navbar-start flex ">
-          <div class="dropdown">
+          <div class="dropdown block md:hidden">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -295,323 +295,13 @@
               </li>
             </ul>
           </div>
-          <!-- Nav Bar Codes Here -->
-          <a class="btn btn-ghost text-xl">Awesome Travel Planner </a>
+          <!-- Nav Bar Codes Here --> 
         </div>
-        <div class="navbar-start hidden md:flex">
-          <ul class="menu menu-horizontal px-1">
-            <li class="z-100">
-              <details>
-                <summary>Places To Stay</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Hotels</span>
-                        <input
-                          type="checkbox"
-                          data-categories="accommodation.hotel"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Apartments</span>
-                        <input
-                          type="checkbox"
-                          data-categories="accommodation.apartment"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Motels</span>
-                        <input
-                          type="checkbox"
-                          data-categories="accommodation.motel"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Hostels</span>
-                        <input
-                          type="checkbox"
-                          data-categories="accommodation.hostel"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Restaurant</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Italian</span>
-                        <input
-                          type="checkbox"
-                          data-categories="catering.restaurant.italian"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Chinese</span>
-                        <input
-                          type="checkbox"
-                          data-categories="catering.restaurant.chinese"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Mexican</span>
-                        <input
-                          type="checkbox"
-                          data-categories="catering.restaurant.mexican"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Indian</span>
-                        <input
-                          type="checkbox"
-                          data-categories="catering.restaurant.indian"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Clothing</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Men</span>
-                        <input
-                          type="checkbox"
-                          data-categories="commercial.clothing.men"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Women</span>
-                        <input
-                          type="checkbox"
-                          data-categories="commercial.clothing.women"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Kids</span>
-                        <input
-                          type="checkbox"
-                          data-categories="commercial.clothing.kids"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Shoes</span>
-                        <input
-                          type="checkbox"
-                          data-categories="commercial.clothing.shoes"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Airports</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Airports</span>
-                        <input
-                          type="checkbox"
-                          data-categories="airport"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">International Airports</span>
-                        <input
-                          type="checkbox"
-                          data-categories="airport.international"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Entertainment</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Theme Park</span>
-                        <input
-                          type="checkbox"
-                          data-categories="entertainment.theme_park"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Zoo</span>
-                        <input
-                          type="checkbox"
-                          data-categories="entertainment.zoo"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Aquarium</span>
-                        <input
-                          type="checkbox"
-                          data-categories="entertainment.aquarium"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Museum</span>
-                        <input
-                          type="checkbox"
-                          data-categories="entertainment.museum"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Cinema</span>
-                        <input
-                          type="checkbox"
-                          data-categories="entertainment.cinema"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Health Care</summary>
-                <ul class="p-2" style="z-index: 1;">
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Hospitals</span>
-                        <input
-                          type="checkbox"
-                          data-categories="healthcare.hospital"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Pharmacy</span>
-                        <input
-                          type="checkbox"
-                          data-categories="healthcare.pharmacy"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-control">
-                      <label class="cursor-pointer label">
-                        <span class="label-text">Generals</span>
-                        <input
-                          type="checkbox"
-                          data-categories="healthcare.clinic_or_praxis.general"
-                          class="checkbox checkbox-error"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        
-        </div>
+        <a class="btn navbar-center btn-ghost text-xl">Awesome Travel Planner </a>
         <!-- Nav Bar button codes here -->
-        <div class="navbar-end">
-          <div class="md:flex">
+        <div class="navbar-end mb-[5px]">
+          
+          <div class="md:flex md:flex-col sm:flex sm:flex-col lg:inline-block ">
             <button class="btn mr-[10px]" id="filterBtn">Apply Filters</button>
             <button class="btn mr-[10px]" id="favTripsBtn">Favorites</button>
             <!-- Open the modal using ID.showModal() method -->
@@ -644,17 +334,332 @@
         </div>
       </div>
     </nav>
-    <!-- Accordian and main image codes here -->
-    <div class="flex justify-center ">
-      <div id="map" class="w-[600px] h-[400px] sm:max-h-[100%] lg:max-h-[100%] sm:max-w-[50%] lg:max-w-[100%]">
+    <!-- Filters dropdown codes here -->
+        <div class="flex justify-center mb-[50px]">
+            <ul class="menu menu-horizontal">
+              <li class="z-100">
+                <details>
+                  <summary class="mx-[20px]">Places To Stay</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li class="mx-[20px]">
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Hotels</span>
+                          <input
+                            type="checkbox"
+                            data-categories="accommodation.hotel"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Apartments</span>
+                          <input
+                            type="checkbox"
+                            data-categories="accommodation.apartment"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Motels</span>
+                          <input
+                            type="checkbox"
+                            data-categories="accommodation.motel"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Hostels</span>
+                          <input
+                            type="checkbox"
+                            data-categories="accommodation.hostel"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary class="mx-[20px]">Restaurant</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Italian</span>
+                          <input
+                            type="checkbox"
+                            data-categories="catering.restaurant.italian"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Chinese</span>
+                          <input
+                            type="checkbox"
+                            data-categories="catering.restaurant.chinese"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Mexican</span>
+                          <input
+                            type="checkbox"
+                            data-categories="catering.restaurant.mexican"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Indian</span>
+                          <input
+                            type="checkbox"
+                            data-categories="catering.restaurant.indian"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary class="mx-[20px]">Clothing</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Men</span>
+                          <input
+                            type="checkbox"
+                            data-categories="commercial.clothing.men"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Women</span>
+                          <input
+                            type="checkbox"
+                            data-categories="commercial.clothing.women"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Kids</span>
+                          <input
+                            type="checkbox"
+                            data-categories="commercial.clothing.kids"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Shoes</span>
+                          <input
+                            type="checkbox"
+                            data-categories="commercial.clothing.shoes"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary class="mx-[20px]">Airports</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Airports</span>
+                          <input
+                            type="checkbox"
+                            data-categories="airport"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">International Airports</span>
+                          <input
+                            type="checkbox"
+                            data-categories="airport.international"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary class="mx-[20px]">Entertainment</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Theme Park</span>
+                          <input
+                            type="checkbox"
+                            data-categories="entertainment.theme_park"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Zoo</span>
+                          <input
+                            type="checkbox"
+                            data-categories="entertainment.zoo"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Aquarium</span>
+                          <input
+                            type="checkbox"
+                            data-categories="entertainment.aquarium"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Museum</span>
+                          <input
+                            type="checkbox"
+                            data-categories="entertainment.museum"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Cinema</span>
+                          <input
+                            type="checkbox"
+                            data-categories="entertainment.cinema"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary class="mx-[20px]">Health Care</summary>
+                  <ul class="p-2" style="z-index: 1;">
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Hospitals</span>
+                          <input
+                            type="checkbox"
+                            data-categories="healthcare.hospital"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Pharmacy</span>
+                          <input
+                            type="checkbox"
+                            data-categories="healthcare.pharmacy"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-control">
+                        <label class="cursor-pointer label">
+                          <span class="label-text">Generals</span>
+                          <input
+                            type="checkbox"
+                            data-categories="healthcare.clinic_or_praxis.general"
+                            class="checkbox checkbox-error"
+                          />
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+        </div>
 
-        <img src="./assets/images/map_of_world.jpg" alt="an image of world map">
+
+
+
+    <!-- Accordian and main image codes here -->
+    <div class="md:flex justify-center ">
+      <div id="map" class="w-[600px] h-[400px] md:max-h-[100%] lg:max-h-[100%] md:max-w-[50%] lg:max-w-[100%]">
+
+        <img src="./assets/images/new-logo.png" class="drop-shadow-2xl" alt="logo">
 
 
 
       </div>
       <section id="places" class="lg:max-w-[100%]">
-        <div id="accordianDiv" class="row-span-full w-[600px] lg:max-w-[100%]">
+        <div id="accordianDiv" class="row-span-full md:max-w-fit w-[600px] lg:max-w-[100%]">
           <div class="collapse ml-[20px] mb-[20px] bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" /> 
             <div class="collapse-title text-xl font-medium">
@@ -729,8 +734,9 @@
     <div id='filterAlertDiv'></div>
 
 
-    <footer class="text-center font-bold" id="footer">
-      <h3>Made with ❤️ by 3 awesome passionate student. 😎😁</h3>
+
+    <footer class="text-center text-neutral-950 font-bold">
+      <h3>Made with ❤️ by 3 awesome passionate students. 😎😁</h3>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
