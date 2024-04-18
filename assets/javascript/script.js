@@ -9,7 +9,6 @@ const modalForm = $("#saveTrip"); //button inside modal to save trip
 const filter = $("#filterBtn"); //button to send the selected filters after the trip is picked
 const accordianDiv = $("#accordianDiv");
 const favPlaceList = $("#favPlaceList");
-// Button to transition to the favorite trips pages
 const favTripsBtn = $("#favTripsBtn");
 const alertDiv = $("#alertDiv");
 const restaurantList = $("#restaurantList");
@@ -77,7 +76,6 @@ function handleSubmit(e) {
     !tripEndDate.val() ||
     !cityInput.val()
   ) {
-    // console.log(tripNameInput.val());
     const alert =
       $(`<div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800" role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -133,7 +131,6 @@ function getGeoId(place, initial) {
       if (!initial) {
         getCityInfo(id); //this returns the internal ID for the given city from the Geoapify api
       }
-      // console.log(initial)
       const trips = getLocalStorage("trips");
 
       for (const trip of trips) {
@@ -150,7 +147,6 @@ function getGeoId(place, initial) {
 
 function getCityInfo(id) {
   //fetch information from Geoapify
-  // const limit = getCategories(true) * 20;
   fetch(
     `https://api.geoapify.com/v2/places?categories=${getCategories()}&filter=place:${id}&limit=500&apiKey=${geoKey}`
   )
@@ -174,8 +170,6 @@ function renderPlacesToList(places) {
   if (!name) {
     name = places.address_line1;
   }
-
-  //TODO Check why names are undefined in the optional statement
   if (categories.includes("catering")) {
     favBtn.text(`${markercount}. ${name}`);
     favBtn.appendTo(newListItem);

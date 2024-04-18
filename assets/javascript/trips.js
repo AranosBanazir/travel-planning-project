@@ -74,7 +74,6 @@ function getFavPlaceInfo(place, id) {
       }
 
       const place = data.data[0].directory[0];
-      console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
       let priceRange = "<p></p>";
 
@@ -132,28 +131,20 @@ async function newMarker(id, name, lat, lon) {
 }
 
 $(document).on("click", "button", (e) => {
-  console.log(e);
   const name = e.currentTarget.id.split("-");
-  // console.log(name[0]);
-
-  // console.log(e.currentTarget.id);
-  console.log(name[1]);
   const tempArray = [];
   const trips = getLocalStorage("trips");
   let trip;
   trip = $(`#trip-${name[1]}`);
   trip.remove();
   let card = $(e.currentTarget).closest(".placeCard");
-  console.log(card);
+
   card.remove();
   for (const trip of trips) {
     const placesArray = [];
     for (let i = 0; i < trip.places.length; i++) {
-      console.log(trip.places[i].name, "||", name[1]);
       if (trip.places[i].name == name[1]) {
-        console.log("inside if statement");
       } else {
-        console.log("inside else statement");
         placesArray.push({
           name: trip.places[i].name,
           address: trip.places[i].address,
@@ -177,7 +168,6 @@ backButton.on("click", function () {
 });
 
 themeButton.on("click", function () {
-  console.log(html[0].dataset.theme);
   if (html[0].dataset.theme === "light") {
     html[0].dataset.theme = "retro";
   } else if (html[0].dataset.theme === "retro") {
