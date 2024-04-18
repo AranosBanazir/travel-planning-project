@@ -70,8 +70,6 @@ function renderTrips() {
   });
 }
 
-function deleteTrip() {}
-
 function getFavPlaceInfo(place, id) {
   const replacedPlaceStr = place.replace(/\s/g, "%20");
   const url = `https://local-business-data.p.rapidapi.com/search?query=${replacedPlaceStr}&limit=20&zoom=13&language=en&region=us`;
@@ -89,27 +87,28 @@ function getFavPlaceInfo(place, id) {
     })
     .then(function (data) {
       if (!data.data[0].directory) {
+        throw new Error("nil value");
         return;
       }
 
       const place = data.data[0].directory[0];
       console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
-      let priceRange = "";
+      let priceRange = "<p></p>";
 
       if (place.price_range) {
         priceRange = `<p>Price: <span style = 'color: green;'>${place.price_range}</span></p>`;
       }
 
       const placeCard = $(`
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap placeCard" id="placecard-${place.name}">
           <div class="card bg-base-100 shadow-xl mb-[10px] w-[370px] text-wrap">
               <div class="card-body">  
                   <h2 class="card-title">${place.name}</h2>
                    <p class = 'break-words'>Adress: ${place.address}</p>
                    <p class = 'break-words'>Rating: ${place.rating} ⭐️ (${place.review_count} reviews)
                    ${priceRange}   
-                   <button class="btn w-[78px] h-[48px] justify-self-end self-end btn-error" id="deleteCard">Delete</button> 
+                   <button class="btn w-[78px] h-[48px] justify-self-end self-end btn-error" id="deleteCard-${place.name}">Delete</button> 
               </div>
               
             </div>
@@ -157,15 +156,43 @@ testButton.on("click", () => {
 testRender.on("click", () => {
   renderTrips();
 });
+// name 1 is ID,
+// second for loop checking for const trip of trips, trip.places, push everything but name[1](address)
+/*
+
+*/
 $(document).on("click", "button", (e) => {
-  // console.log(e);
+  console.log(e);
   const name = e.currentTarget.id.split("-");
   // console.log(name[0]);
+
+  // console.log(e.currentTarget.id);
+  console.log(name[1]);
   const tempArray = [];
   const trips = getLocalStorage("trips");
   let trip;
   trip = $(`#trip-${name[1]}`);
   trip.remove();
+  let card = $(e.currentTarget).closest(".placeCard");
+  console.log(card);
+  card.remove();
+  for (const trip of trips) {
+    const placesArray = [];
+    for (let i = 0; i < trip.places.length; i++) {
+      console.log(trip.places[i].name, "||", name[1]);
+      if (trip.places[i].name == name[1]) {
+        console.log("inside if statement");
+      } else {
+        console.log("inside else statement");
+        placesArray.push({
+          name: trip.places[i].name,
+          address: trip.places[i].address,
+        });
+      }
+    }
+    trip.places = placesArray;
+  }
+
   for (const trip of trips) {
     if (trip.id == name[1]) {
     } else {
