@@ -26,7 +26,7 @@ Clicking on places within the dropdown lists will highlight the selected ones ye
 If after saving a trip you find there are saved places that you do not care to visit anymore, simply click the delete option on any of the displayed cards. To return and create a new trip click 'Back to Main Page'.
 ## Credits
 
-This project was made with collaboration from [Ryan Hanson](https://github.com/rhansen27) and [Veysel Arslan](https://github.com/veyselarslan12) who both added greatly to the project.
+This project was made with collaboration from [Ryan Hansen](https://github.com/rhansen27) and [Veysel Arslan](https://github.com/veyselarslan12) who both added greatly to the project.
 
 API's in use are:
 
