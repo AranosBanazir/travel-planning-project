@@ -60,7 +60,7 @@ function renderTrips() {
     initMap(trip.coords.lat, trip.coords.lon, trip.id);
   });
 }
-
+// function to get information of favorited places from index.html
 function getFavPlaceInfo(place, id) {
   const replacedPlaceStr = place.replace(/\s/g, "%20");
   const url = `https://local-business-data.p.rapidapi.com/search?query=${replacedPlaceStr}&limit=20&zoom=13&language=en&region=us`;
@@ -109,7 +109,7 @@ function getFavPlaceInfo(place, id) {
       newMarker(id, place.name, place.latitude, place.longitude);
     });
 }
-
+// function to initialize the map
 const maps = [];
 async function initMap(lat, lon, id) {
   const mapEl = $(`#map-${id}`);
@@ -126,7 +126,7 @@ async function initMap(lat, lon, id) {
   mapEl.css("border-radius", "100px");
   mapEl.css("z-index", "1");
 }
-
+// function that creates the markers on the map
 async function newMarker(id, name, lat, lon) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -137,14 +137,16 @@ async function newMarker(id, name, lat, lon) {
     title: `${name}`,
   });
 }
-
+// event listener for buttons on the document
 $(document).on("click", "button", (e) => {
   const name = e.currentTarget.id.split("-");
   const tempArray = [];
   const trips = getLocalStorage("trips");
+
   let trip;
   trip = $(`#trip-${name[1]}`);
   trip.remove();
+  // remove favorite location from travel card as well as from local storage
   let card = $(e.currentTarget).closest(".placeCard");
   card.remove();
   for (const trip of trips) {
@@ -160,7 +162,7 @@ $(document).on("click", "button", (e) => {
     }
     trip.places = placesArray;
   }
-
+  // remove trip from local storage
   for (const trip of trips) {
     if (trip.id == name[1]) {
     } else {
@@ -179,7 +181,7 @@ backButton.on("click", function () {
   //return to landing page
   window.location.href = "./index.html";
 });
-
+// theme toggler
 themeButton.on("click", function () {
   if (html[0].dataset.theme === "light") {
     html[0].dataset.theme = "retro";
@@ -195,7 +197,7 @@ themeButton.on("click", function () {
 
   saveLocalStorage("theme", html[0].dataset.theme);
 });
-
+// load on ready
 $(document).ready(function () {
   setTimeout(renderTrips, 500);
   html[0].dataset.theme = getLocalStorage("theme") || "light";
