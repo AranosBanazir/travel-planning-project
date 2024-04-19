@@ -22,24 +22,12 @@ function saveLocalStorage(key, item) {
 }
 
 //Make a function to render LS info to Page
-// TODO remove the console.logs and remove dependency on clicking the button to render
 function renderTrips() {
   const trips = getLocalStorage("trips");
   tripList.empty();
   trips.forEach((trip) => {
-    //     const tripCard = `
-    //     <div class="collapse collapse-arrow bg-base-200">
-    //     <input type="radio" name="my-accordion-2" checked="checked" />
-    //     <div class="collapse-title text-xl font-medium">${trip.trip} Location: ${trip.city} - ${trip.startDate} To: ${trip.tripEndDate}</div>
-    //     <div class="collapse-content">
-    //     <div id="map-${trip.id}" class="row-span-full">
-    //     <img src="https://placehold.co/600x400">
-    //     </div>
-    //     </div>
-    //   </div>`;
-
-    const formatedStartDate = new Date(trip.startDate).toLocaleDateString()
-    const formatedEndDate = new Date(trip.tripEndDate).toLocaleDateString()
+    const formatedStartDate = new Date(trip.startDate).toLocaleDateString();
+    const formatedEndDate = new Date(trip.tripEndDate).toLocaleDateString();
 
     const tripCard = $(`
 <div class="collapse collapse-arrow bg-base-200 mt-2 mb-2" id="trip-${trip.id}">
@@ -72,14 +60,13 @@ function renderTrips() {
     initMap(trip.coords.lat, trip.coords.lon, trip.id);
   });
 }
-
+// function to get information of favorited places from index.html
 function getFavPlaceInfo(place, id) {
   const replacedPlaceStr = place.replace(/\s/g, "%20");
   const url = `https://local-business-data.p.rapidapi.com/search?query=${replacedPlaceStr}&limit=20&zoom=13&language=en&region=us`;
   const options = {
     method: "GET",
     headers: {
-
       "X-RapidAPI-Key": "a1a6f39749msha4cefe337e2c0e4p1399cbjsn35c3b62321e4",
       "X-RapidAPI-Host": "local-business-data.p.rapidapi.com",
     },
@@ -95,7 +82,6 @@ function getFavPlaceInfo(place, id) {
       }
 
       const place = data.data[0].directory[0];
-      console.log(place);
       const placeCardDiv = $(`#placeCardDiv-${id}`);
       let priceRange = "<p></p>";
 
@@ -123,7 +109,7 @@ function getFavPlaceInfo(place, id) {
       newMarker(id, place.name, place.latitude, place.longitude);
     });
 }
-
+// function to initialize the map
 const maps = [];
 async function initMap(lat, lon, id) {
   const mapEl = $(`#map-${id}`);
@@ -140,7 +126,7 @@ async function initMap(lat, lon, id) {
   mapEl.css("border-radius", "100px");
   mapEl.css("z-index", "1");
 }
-
+// function that creates the markers on the map
 async function newMarker(id, name, lat, lon) {
   const position = { lat: lat, lng: lon };
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -151,30 +137,23 @@ async function newMarker(id, name, lat, lon) {
     title: `${name}`,
   });
 }
-
+// event listener for buttons on the document
 $(document).on("click", "button", (e) => {
-  console.log(e);
   const name = e.currentTarget.id.split("-");
-  // console.log(name[0]);
-
-  // console.log(e.currentTarget.id);
-  console.log(name[1]);
   const tempArray = [];
   const trips = getLocalStorage("trips");
+
   let trip;
   trip = $(`#trip-${name[1]}`);
   trip.remove();
+  // remove favorite location from travel card as well as from local storage
   let card = $(e.currentTarget).closest(".placeCard");
-  console.log(card);
   card.remove();
   for (const trip of trips) {
     const placesArray = [];
     for (let i = 0; i < trip.places.length; i++) {
-      console.log(trip.places[i].name, "||", name[1]);
       if (trip.places[i].name == name[1]) {
-        console.log("inside if statement");
       } else {
-        console.log("inside else statement");
         placesArray.push({
           name: trip.places[i].name,
           address: trip.places[i].address,
@@ -183,7 +162,7 @@ $(document).on("click", "button", (e) => {
     }
     trip.places = placesArray;
   }
-
+  // remove trip from local storage
   for (const trip of trips) {
     if (trip.id == name[1]) {
     } else {
@@ -193,18 +172,17 @@ $(document).on("click", "button", (e) => {
   saveLocalStorage("trips", tempArray);
   if (getLocalStorage("trips").length === 0) {
     location.href = "./index.html";
-    localStorage.removeItem('currentCity')
-    localStorage.removeItem('currentTrip')
-    localStorage.removeItem('currentTripId')
+    localStorage.removeItem("currentCity");
+    localStorage.removeItem("currentTrip");
+    localStorage.removeItem("currentTripId");
   }
 });
 backButton.on("click", function () {
   //return to landing page
   window.location.href = "./index.html";
 });
-
+// theme toggler
 themeButton.on("click", function () {
-  console.log(html[0].dataset.theme);
   if (html[0].dataset.theme === "light") {
     html[0].dataset.theme = "retro";
   } else if (html[0].dataset.theme === "retro") {
@@ -219,7 +197,7 @@ themeButton.on("click", function () {
 
   saveLocalStorage("theme", html[0].dataset.theme);
 });
-
+// load on ready
 $(document).ready(function () {
   setTimeout(renderTrips, 500);
   html[0].dataset.theme = getLocalStorage("theme") || "light";
